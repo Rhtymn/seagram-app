@@ -5,7 +5,6 @@ import styles from './StudentPage.module.css';
 
 const StudentPage = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [isShowSidebarToggle, setIsShowSidebarToggle] = useState(false);
 
   const toggleSidebarHandler = () => {
     setShowSidebar((prev)=>{
@@ -15,7 +14,7 @@ const StudentPage = () => {
 
   return (
     <div className={`${styles.student_page}`}>
-        <Navbar isShowSidebarToggle={isShowSidebarToggle} onToggleSidebar={toggleSidebarHandler}/>
+        <Navbar onToggleSidebar={toggleSidebarHandler}/>
         <div className='d-flex'>
           <Sidebar isShowSidebar={showSidebar}/>
         </div>
