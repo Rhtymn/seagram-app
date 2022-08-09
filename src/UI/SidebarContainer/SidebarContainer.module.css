@@ -9,6 +9,7 @@
     -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.75);
     transform: translateX(-100%);
     transition: all ease-in-out 200ms;
+    z-index: 10;
 }
 
 .show_sidebar{

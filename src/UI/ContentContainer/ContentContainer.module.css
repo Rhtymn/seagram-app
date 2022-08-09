@@ -1,0 +1,13 @@
+.content_container {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: bisque;
+}
+
+@media (min-width:768px) {
+    .content_container{
+        width: calc(100% - 300px);
+    }
+}

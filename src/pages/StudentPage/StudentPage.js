@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import styles from './StudentPage.module.css';
@@ -15,8 +16,9 @@ const StudentPage = () => {
   return (
     <div className={`${styles.student_page}`}>
         <Navbar onToggleSidebar={toggleSidebarHandler}/>
-        <div className='d-flex'>
+        <div className={`${styles.body_container}`}>
           <Sidebar isShowSidebar={showSidebar}/>
+          <Outlet/>
         </div>
     </div>
   )
