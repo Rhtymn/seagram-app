@@ -1,0 +1,19 @@
+.birthdateInput_container{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.birthdateInput_container input {
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 8px 15px;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.colouredLabel{
+    color:rgb(243, 176, 88);
+}
