@@ -17,3 +17,27 @@
 .colouredLabel{
     color:rgb(243, 176, 88);
 }
+
+.roleInput_container {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.roleInput_container span{
+    position: absolute;
+    right: 15px;
+    font-size: 1.5rem;
+    pointer-events: none;
+}
+
+.roleInput_container select{
+    z-index: 2;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 8px 10px;
+    width: 100%;
+    
+    -moz-appearance:none; 
+    -webkit-appearance:none; 
+    appearance:none;
+}

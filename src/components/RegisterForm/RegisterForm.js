@@ -11,6 +11,7 @@ const RegisterForm = () => {
     const [isColouredBirthLabel, setIsColouredBirthLabel] = useState(false);
     const [emailInputValue, setEmailInputValue] = useState('');
     const [passwordInputValue, setPasswordInputValue] = useState('');
+    const [roleInputValue, setRoleInputValue] = useState('student');
     const birthLabelClasses = isColouredBirthLabel ? `${styles.colouredLabel}` : ``;
     
     const birthdateInputBlurHandler = () => {
@@ -33,6 +34,15 @@ const RegisterForm = () => {
                     onFocus={()=>setIsColouredBirthLabel(true)}
                     onBlur={birthdateInputBlurHandler}>
                 </input>
+            </div>
+            <div className={`${styles.roleInput_container}`}>
+                <select value={roleInputValue} onChange={(e)=>setRoleInputValue(e.target.value)}>
+                    <option value="student">Student</option>
+                    <option value="instructor">Instructor</option>
+                </select>
+                <span>
+                    <i className="fa-solid fa-caret-down"></i>
+                </span>
             </div>
             <Input label="Email" type="email" value={emailInputValue} onInputChange={setEmailInputValue}/>
             <Input label="Password" type="password" value={passwordInputValue} onInputChange={setPasswordInputValue}/>
