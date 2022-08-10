@@ -1,0 +1,25 @@
+.course_container{
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+}
+
+.course_container h2 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.course_container span {
+    font-size: 0.8rem;
+}
+
+.course_information {
+    padding: 10px;
+}
+
+.coloured{
+    width: 100%;
+    height: 100px;
+    background-color: aquamarine;
+}

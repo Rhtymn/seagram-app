@@ -3,56 +3,24 @@
     width: 90%;
 }
 
-.enrolledCourse_container {
-    margin: auto;
+.course_progress {
+    margin-top: 0.5rem;
+    font-size: 0.2rem;
+}
+
+.progress_bar {
+    position: relative;
     width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
+    height: 10px;
+    border: 1px solid black;
+    overflow: hidden;
 }
 
-.enrolledCourse_container h1 {
-    font-size: 1.5rem;
-}
-
-.enrolledCourse_container ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display: grid;
-    grid-auto-rows: 200px;
-    grid-template-columns: inherit;
-    row-gap: 20px;
-}
-
-.enrolledCourse_container ul li {
-    background-color: aquamarine;
-}
-
-@media (min-width:768px) {
-    .enrolledCourse_container {
-        width: 400px;
-    }
-    .enrolledCourse_container ul {
-        grid-template-columns: 350px
-    }
-}
-
-@media (min-width:976px) {
-    .enrolledCourse_container {
-        width: 760px;
-    }
-    .enrolledCourse_container ul {
-        column-gap: 20px;
-        grid-template-columns: repeat(2,350px)
-    }
-}
-
-@media (min-width:1400px) {
-    .enrolledCourse_container {
-        width: 1130px;
-    }
-    .enrolledCourse_container ul {
-        grid-template-columns: repeat(3,350px)
-    }
+.progress_bar::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 10px;
+    background-color: black;
+    width: 35%;
 }

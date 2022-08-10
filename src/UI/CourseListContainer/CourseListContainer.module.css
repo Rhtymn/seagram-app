@@ -1,0 +1,54 @@
+.enrolledCourse_container {
+    margin: auto;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+}
+
+
+.enrolledCourse_container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.enrolledCourse_container ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: grid;
+    grid-auto-rows: 200px;
+    grid-template-columns: inherit;
+    row-gap: 20px;
+}
+
+@media (min-width:768px) {
+    .enrolledCourse_container {
+        width: 400px;
+    }
+    .enrolledCourse_container ul {
+        grid-template-columns: 350px
+    }
+}
+
+@media (min-width:976px) {
+    .enrolledCourse_container {
+        width: 760px;
+    }
+    .enrolledCourse_container ul {
+        column-gap: 20px;
+        grid-template-columns: repeat(2,350px)
+    }
+}
+
+@media (min-width:1400px) {
+    .enrolledCourse_container {
+        width: 1130px;
+    }
+    .enrolledCourse_container ul {
+        grid-template-columns: repeat(3,350px)
+    }
+}
