@@ -1,8 +1,14 @@
 .course_container{
+    position: relative;
     cursor: pointer;
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    transition: all ease-in-out 100ms;
+}
+
+.course_container:hover{
+    transform: scale(1.01);
 }
 
 .course_container h2 {
@@ -12,6 +18,7 @@
 
 .course_container span {
     font-size: 0.8rem;
+    display: block;
 }
 
 .course_information {
