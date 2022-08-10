@@ -1,12 +1,16 @@
+:root{
+    --font_colour:rgb(33, 43, 54);
+}
+
 .enrolledCourse_container {
+    font-family: "Public Sans", sans-serif;
+    color: var(--font_colour);
     margin: auto;
     width: 100%;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: rgb(145 158 171 / 20%) 0px 3px 1px -2px, rgb(145 158 171 / 14%) 0px 2px 2px 0px, rgb(145 158 171 / 12%) 0px 1px 5px 0px;
 }
 
 

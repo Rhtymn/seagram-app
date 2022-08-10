@@ -1,16 +1,20 @@
+:root{
+    --font_colour:rgb(33, 43, 54);
+}
+
 .navbar {
+    color: var(--font_colour);
     width: 100%;
     height: 56px;
-    background-color: rgb(11, 196, 134);
+    backdrop-filter: blur(6px);
+    background-color: rgba(249, 250, 251, 0.72);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
-    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.4);
-    -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.4);
-    -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.4);
     display: flex;
     justify-content: space-between;
+
 }
 
 .navbar_brand {
@@ -21,9 +25,8 @@
 }
 
 .navbar_brand h1{
-    color: white;
-    font-size: 1.5rem;
-    text-transform: uppercase;
+    font-size: 1.7rem;
+    font-weight: bold;
 }
 
 .navbar_actions{
@@ -33,9 +36,19 @@
 }
 
 .sidebar_toggle{
-    color: #fff;
+    color: var(--font_colour);
     font-size: 1.5rem;
     margin-left: 10px;
     border: none;
     background-color: transparent;
+}
+
+@media (min-width:768px) {
+    .navbar {
+        width: calc(100% - 300px);
+        left: 300px;
+    }
+    .navbar_brand {
+        margin-left: 2rem;
+    }
 }

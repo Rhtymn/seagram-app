@@ -13,10 +13,9 @@ const RNavbar = () => {
 
     return <nav className={`${styles.navbar}`}>
         <div className={`${styles.navbar_brand}`}>
-            <h1>Seagram</h1>
+            <h1 className='d-md-none'>Seagram</h1>
         </div>
         <div className={`${styles.navbar_actions}`}>
-            <LogoutButton/>
             <button className={`${styles.sidebar_toggle} d-md-none`} onClick={toggleSidebarHandler}>
                     <i class="fa-solid fa-align-justify"></i>
             </button>

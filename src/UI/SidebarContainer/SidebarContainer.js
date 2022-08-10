@@ -8,6 +8,7 @@ const SidebarContainer = (props) => {
 
     return (
         <div className={sidebarClasses}>
+            <h1 className="d-none d-md-block">Seagram</h1>
             <ul className={`${styles.sidebar_nav_container}`}>
                 {props.children}
             </ul>
