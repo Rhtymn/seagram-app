@@ -9,11 +9,14 @@ const SidebarItem = (props) => {
 
   const sideNavClickHandler = () => {
     dispatch(uiActions.toggleSidebar());
+    dispatch(uiActions.toggleActiveSideNav(props.label.toLowerCase()));
   }
   
+  const liClasses = props.active ? `${styles.active}` : ``;
+
   return (
     <Link to={props.to} onClick={sideNavClickHandler}>
-      <li>
+      <li className={liClasses}>
             <div className={`${styles.icon}`}>
                 {props.children}
             </div>

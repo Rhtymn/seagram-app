@@ -42,6 +42,7 @@
     margin-bottom: 15px;
     border-radius: 10px;
     cursor: pointer;
+    transition: all ease-in-out 100ms;
 }
 
 .sidebar_nav_container li:hover {
