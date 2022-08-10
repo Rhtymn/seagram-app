@@ -5,13 +5,11 @@ import SidebarItem from '../../components/SidebarItem/SidebarItem'
 
 const Sidebar = (props) => {
     return (
-    <SidebarContainer isShowSidebar={props.isShowSidebar}>
-        <SidebarItem label="Dashboard" to="/student/dashboard" 
-            onChangeSidenav={props.onChangeSidenav}>
+    <SidebarContainer>
+        <SidebarItem label="Dashboard" to="/student/dashboard">
             <i class="fa-solid fa-gauge-high"></i>
         </SidebarItem>
-        <SidebarItem label="Course" to="/student/course" 
-            onChangeSidenav={props.onChangeSidenav}>
+        <SidebarItem label="Course" to="/student/course">
                 <i class="fa-solid fa-book-open"></i>
         </SidebarItem>
     </SidebarContainer>

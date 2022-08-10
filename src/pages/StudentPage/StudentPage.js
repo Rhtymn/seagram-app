@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import styles from './StudentPage.module.css';
 
 const StudentPage = () => {
-  const [showSidebar, setShowSidebar] = useState(false);
-
-  const toggleSidebarHandler = () => {
-    setShowSidebar((prev)=>{
-      return !prev;
-    })
-  }
-
   return (
     <div className={`${styles.student_page}`}>
-        <Navbar onToggleSidebar={toggleSidebarHandler}/>
+        <Navbar/>
         <div className={`${styles.body_container}`}>
-          <Sidebar isShowSidebar={showSidebar} onChangeSidenav={toggleSidebarHandler}/>
+          <Sidebar/>
           <Outlet/>
         </div>
     </div>
