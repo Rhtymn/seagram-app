@@ -3,6 +3,7 @@ import styles from './StudentCourse.module.css';
 import ContentContainer from '../../UI/ContentContainer/ContentContainer';
 import CourseListContainer from '../../UI/CourseListContainer/CourseListContainer';
 import CourseContainer from '../../UI/CourseContainer/CourseContainer';
+import { useSelector } from 'react-redux/es/exports';
 
 const VerifiedCourse = (props) => {
   return <CourseContainer {...props}>
@@ -10,13 +11,13 @@ const VerifiedCourse = (props) => {
 }
 
 const StudentCourse = () => {
+  const verifiedCourse = useSelector((state) => state.course.verifiedCourse);
+  const verifiedCourseList = verifiedCourse.map((course) => <VerifiedCourse key={course.id} {...course}/>)
+
   return (
     <ContentContainer>
       <CourseListContainer listName="Verified Course">
-        <VerifiedCourse courseName="Machine Learning" instructor="Alan Turing"/>
-        <VerifiedCourse courseName="Machine Learning" instructor="Alan Turing"/>
-        <VerifiedCourse courseName="Machine Learning" instructor="Alan Turing"/>
-        <VerifiedCourse courseName="Machine Learning" instructor="Alan Turing"/>
+        {verifiedCourseList}
       </CourseListContainer>
     </ContentContainer>
   )

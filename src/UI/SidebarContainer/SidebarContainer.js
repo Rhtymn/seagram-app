@@ -3,7 +3,7 @@ import styles from './SidebarContainer.module.css';
 import {useSelector} from 'react-redux';
 
 const SidebarContainer = (props) => {
-    const isShowSidebar = useSelector((state) => state.isShowSidebar);
+    const isShowSidebar = useSelector((state) => state.ui.isShowSidebar);
     const sidebarClasses = isShowSidebar? `${styles.sidebar} ${styles.show_sidebar}` : `${styles.sidebar}`;
 
     return (
