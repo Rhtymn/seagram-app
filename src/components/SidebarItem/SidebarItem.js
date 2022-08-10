@@ -4,7 +4,7 @@ import styles from './SidebarItem.module.css';
 
 const SidebarItem = (props) => {
   return (
-    <Link to={props.to}>
+    <Link to={props.to} onClick={props.onChangeSidenav}>
       <li>
             <div className={`${styles.icon}`}>
                 {props.children}

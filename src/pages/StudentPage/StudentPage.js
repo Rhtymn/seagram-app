@@ -17,7 +17,7 @@ const StudentPage = () => {
     <div className={`${styles.student_page}`}>
         <Navbar onToggleSidebar={toggleSidebarHandler}/>
         <div className={`${styles.body_container}`}>
-          <Sidebar isShowSidebar={showSidebar}/>
+          <Sidebar isShowSidebar={showSidebar} onChangeSidenav={toggleSidebarHandler}/>
           <Outlet/>
         </div>
     </div>
