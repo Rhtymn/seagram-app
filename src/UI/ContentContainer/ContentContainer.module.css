@@ -1,9 +1,17 @@
 .content_container {
     position: absolute;
+    padding-top: 50px;
     right: 0;
     width: 100%;
     min-height: 100vh;
-    background-color: bisque;
+    background-color: rgb(239, 239, 239);
+}
+
+@media (min-width:576px) {
+    .content_container{
+        padding-top: 80px;
+        padding-bottom: 50px;
+    }
 }
 
 @media (min-width:768px) {
