@@ -6,7 +6,8 @@ const uiSlice = createSlice({
         isShowSidebar:false, 
         activeSideNav: "dashboard",
         activeCourseDetails: {},
-        isShowCourseDetails: false,
+        isShowCourseDetails: false, 
+        isShowQuiz: false,
     },
     reducers: {
         toggleSidebar(state){

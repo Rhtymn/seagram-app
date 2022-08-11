@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import StudentPage from './pages/StudentPage/StudentPage';
 import StudentDashboard from './layout/StudentDashboard/StudentDashboard';
 import StudentCourse from './layout/StudentCourse/StudentCourse';
+import QuizPage from './pages/QuizPage/QuizPage';
 
 // TODO
 // 1. Make Reusable course details container (DONE)
@@ -19,6 +20,7 @@ function App() {
         <Route path="dashboard" element={<StudentDashboard/>}></Route>
         <Route path="course" element={<StudentCourse/>}></Route>
       </Route>
+      <Route path='quiz' element={<QuizPage/>}/>
     </Routes>
   </Router>
 }

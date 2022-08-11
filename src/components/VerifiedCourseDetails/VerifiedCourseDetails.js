@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './VerifiedCourseDetails.module.css';
 import { useSelector } from 'react-redux';
+import Button from "../../UI/Button/Button";
 
 const VerifiedCourseDetails = () => {
     const courseInfo = useSelector((state)=>state.ui.activeCourseDetails);
@@ -20,7 +21,8 @@ const VerifiedCourseDetails = () => {
                     sapien pellentesque. Vitae ultricies leo integer malesuada.
                 </p>
             </div>
-            <button>Enroll</button>
+            {/* <button>Enroll</button> */}
+            <Button>Enroll</Button>
         </div>
     </>
     )
