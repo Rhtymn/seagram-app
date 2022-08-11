@@ -30,8 +30,8 @@ const CourseDetails = () => {
             sapien pellentesque. Vitae ultricies leo integer malesuada.
           </p>
         </div>
+        <button>Enroll</button>
       </div>
-      <button>Enroll</button>
     </div>
   ,document.getElementById("course-details-modal")))
 }
