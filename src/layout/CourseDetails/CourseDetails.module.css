@@ -1,0 +1,47 @@
+.course_details_container{
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    z-index: 110;
+}
+
+.course_details_actions {
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    font-size: 1.5rem;
+}
+
+.course_information {
+    margin-top: 3rem;
+}
+
+.course_information h1 {
+    font-size: 1.2rem;
+}
+
+.course_information span {
+    font-size: 0.8rem;
+}
+
+.course_information .description h2{
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.course_information {
+    text-align: justify;
+}
+
+.course_information button {
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}

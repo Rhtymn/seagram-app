@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import StudentPage from './pages/StudentPage/StudentPage';
 import StudentDashboard from './layout/StudentDashboard/StudentDashboard';
 import StudentCourse from './layout/StudentCourse/StudentCourse';
+import CourseDetails from './layout/CourseDetails/CourseDetails';
 
 function App() {
   return <Router>

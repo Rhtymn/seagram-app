@@ -12,9 +12,9 @@ const ProgressBar = (props) => {
 </div>
 }
 
-const EnrolledCourse = ({courseName,instructor,progress}) => {
-  return <CourseContainer courseName={courseName} instructor={instructor}>
-        <ProgressBar progress={progress}/>
+const EnrolledCourse = (props) => {
+  return <CourseContainer {...props}>
+        <ProgressBar progress={props.progress}/>
     </CourseContainer>
 }
 
