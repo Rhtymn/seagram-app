@@ -4,7 +4,8 @@ import ContentContainer from '../../UI/ContentContainer/ContentContainer';
 import CourseListContainer from '../../UI/CourseListContainer/CourseListContainer';
 import CourseContainer from '../../UI/CourseContainer/CourseContainer';
 import { useSelector } from 'react-redux/es/exports';
-import CourseDetails from '../CourseDetails/CourseDetails';
+import CourseDetailsContainer from '../../UI/CourseDetailsContainer/CourseDetailsContainer';
+import VerifiedCourseDetails from '../../components/VerifiedCourseDetails/VerifiedCourseDetails';
 
 const VerifiedCourse = (props) => {
   return <CourseContainer {...props}>
@@ -22,9 +23,13 @@ const StudentCourse = () => {
     </CourseListContainer>
   </ContentContainer>
 
+  const CourseDetails = <CourseDetailsContainer>
+    <VerifiedCourseDetails/>
+  </CourseDetailsContainer>
+  
   return (<>
     {!isShowCourseDetails && Content}
-    {isShowCourseDetails && <CourseDetails/>}
+    {isShowCourseDetails && CourseDetails}
   </>)
 }
 

@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import styles from './CourseContainer.module.css';
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
