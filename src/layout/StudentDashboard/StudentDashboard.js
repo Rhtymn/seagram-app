@@ -3,9 +3,11 @@ import styles from './StudentDashboard.module.css';
 import ContentContainer from '../../UI/ContentContainer/ContentContainer';
 import CourseListContainer from '../../UI/CourseListContainer/CourseListContainer';
 import CourseContainer from '../../UI/CourseContainer/CourseContainer';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useDispatch, useSelector} from 'react-redux';
 import CourseDetailsContainer from '../../UI/CourseDetailsContainer/CourseDetailsContainer';
 import EnrolledCourseDetails from '../../components/EnrolledCourseDetails/EnrolledCourseDetails';
+import { enrolledCourseActions } from '../../store/enrolledCourse-slice';
+import {sortCourse} from "../../Helper"
 
 const ProgressBar = (props) => {
   return <div className={`${styles.course_progress}`}>
@@ -21,12 +23,37 @@ const EnrolledCourse = (props) => {
 }
 
 const StudentDashboard = () => {
+  const dispatch = useDispatch();
   const isShowCourseDetails = useSelector((state)=>state.ui.isShowCourseDetails);
   const enrolledCourse = useSelector((state) => state.course.enrolledCourse);
-  const enrolledCourseList = enrolledCourse.map((course) => <EnrolledCourse key={course.id} {...course}/>)
 
+  const selectedRowNumber = useSelector((state)=>state.enrolledCourse.selectedRowNumber);
+  const selectedSortBy = useSelector((state)=>state.enrolledCourse.selectedSortBy);
+  const isShowRowOption = useSelector((state)=>state.enrolledCourse.isShowRowOption);
+  const isShowSortOption = useSelector((state)=>state.enrolledCourse.isShowSortOption);
+
+  const selectSortClickHandler = () => {
+    dispatch(enrolledCourseActions.toggleSortOption());
+  }
+  const optionSortClickHandler = (sortBy) => {
+    dispatch(enrolledCourseActions.setSelectedSortBy(sortBy));
+  }
+  const selectRowClickHandler = () => {
+    dispatch(enrolledCourseActions.toggleRowOption());
+  }
+  const optionRowClickHandler = (rowNumber) => {
+    dispatch(enrolledCourseActions.setSelectedRowNumber(rowNumber));
+  }
+
+  const ctx = {
+    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,
+    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler
+  }
+
+  const sortedEnrolledCourse = sortCourse(enrolledCourse,selectedSortBy)
+  const enrolledCourseList = sortedEnrolledCourse.map((course) => <EnrolledCourse key={course.id} {...course}/>)
   const Content = <ContentContainer>
-    <CourseListContainer listName="Enrolled Course">
+    <CourseListContainer listName="Enrolled Course" {...ctx}>
       {enrolledCourseList}
     </CourseListContainer>
   </ContentContainer>

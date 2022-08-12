@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const ENROLLED_COURSE = [
-    {id:1, type:"enrolled", courseName:"Machine Learning", instructor:"Alan Turing", progress:"35%"},
+    {id:1, type:"enrolled", courseName:"Machine Learning", instructor:"Alan Turing", progress:"25%"},
     {id:2, type:"enrolled", courseName:"Artificial Intelligence", instructor:"Robert", progress:"35%"},
     {id:3, type:"enrolled", courseName:"Mathematics", instructor:"George", progress:"35%"},
     {id:4, type:"enrolled", courseName:"Physics", instructor:"Thomas", progress:"35%"},
