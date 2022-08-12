@@ -10,6 +10,7 @@
 
 .option_container.active{
     opacity: 1;
+    z-index: 200;
 }
 
 .option_container .option {

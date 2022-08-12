@@ -5,7 +5,12 @@ const ENROLLED_COURSE = [
     {id:2, type:"enrolled", courseName:"Artificial Intelligence", instructor:"Robert", progress:"35%"},
     {id:3, type:"enrolled", courseName:"Mathematics", instructor:"George", progress:"35%"},
     {id:4, type:"enrolled", courseName:"Physics", instructor:"Thomas", progress:"35%"},
-    {id:5, type:"enrolled", courseName:"Data Structure", instructor:"Lamela", progress:"35%"}
+    {id:5, type:"enrolled", courseName:"Data Structure", instructor:"Lamela", progress:"35%"},
+    {id:6, type:"enrolled", courseName:"Machine Learning", instructor:"Alan Turing", progress:"35%"},
+    {id:7, type:"enrolled", courseName:"Artificial Intelligence", instructor:"Robert", progress:"35%"},
+    {id:8, type:"enrolled", courseName:"Mathematics", instructor:"George", progress:"35%"},
+    {id:9, type:"enrolled", courseName:"Physics", instructor:"Thomas", progress:"35%"},
+    {id:10, type:"enrolled", courseName:"Data Structure", instructor:"Lamela", progress:"35%"}
 ]
 
 const VERIFIED_COURSE = [

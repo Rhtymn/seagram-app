@@ -6,11 +6,13 @@ const uiSlice = createSlice({
         activeSideNav: "dashboard",
         activeCourseDetails: {},
         selectedRowNumber: "5",
+        selectedSortBy: "name",
         isShowSidebar:false, 
         isShowCourseDetails: false, 
         isShowQuiz: false,
         isShowQuizNavigation: false,
         isShowRowOption: false,
+        isShowSortOptions: false,
     },
     reducers: {
         toggleSidebar(state){
@@ -28,12 +30,18 @@ const uiSlice = createSlice({
         toggleRowOption(state){
             state.isShowRowOption = !state.isShowRowOption;
         },
+        toggleSortOption(state){
+            state.isShowSortOptions = !state.isShowSortOptions;
+        },
         setActiveCourseDetails(state,actions){
             state.activeCourseDetails = actions.payload;
             console.log(state.activeCourseDetails);
         },
         setSelectedRowNumber(state,actions){
             state.selectedRowNumber = actions.payload;
+        },
+        setSelectedSortBy(state,actions){
+            state.selectedSortBy = actions.payload;
         }
     }
 })
