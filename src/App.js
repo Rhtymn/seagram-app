@@ -8,8 +8,7 @@ import StudentCourse from './layout/StudentCourse/StudentCourse';
 import QuizPage from './pages/QuizPage/QuizPage';
 
 // TODO
-// 1. Make Reusable course details container (DONE)
-// 2. Added course details for enrolled course 
+// 1. Implement pagination & sorting on course list
 
 function App() {
   return <Router>

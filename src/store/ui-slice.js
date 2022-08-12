@@ -3,12 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const uiSlice = createSlice({
     name: 'ui',
     initialState: {
-        isShowSidebar:false, 
         activeSideNav: "dashboard",
         activeCourseDetails: {},
+        selectedRowNumber: "5",
+        isShowSidebar:false, 
         isShowCourseDetails: false, 
         isShowQuiz: false,
         isShowQuizNavigation: false,
+        isShowRowOption: false,
     },
     reducers: {
         toggleSidebar(state){
@@ -23,9 +25,15 @@ const uiSlice = createSlice({
         toggleQuizNavigation(state){
             state.isShowQuizNavigation = !state.isShowQuizNavigation;
         },
+        toggleRowOption(state){
+            state.isShowRowOption = !state.isShowRowOption;
+        },
         setActiveCourseDetails(state,actions){
             state.activeCourseDetails = actions.payload;
             console.log(state.activeCourseDetails);
+        },
+        setSelectedRowNumber(state,actions){
+            state.selectedRowNumber = actions.payload;
         }
     }
 })

@@ -1,4 +1,4 @@
-li {
+.navigation_item {
     cursor: pointer;
     border: 1px solid rgb(32, 101, 209);
     border-radius: 8px;
@@ -7,7 +7,7 @@ li {
     text-align: center;
 }
 
-li.active {
+.navigation_item.active {
     color: white;
     background-color: rgb(32, 101, 209);;
 }
