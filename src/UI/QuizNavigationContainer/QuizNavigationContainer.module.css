@@ -1,9 +1,18 @@
 .quiz_navigation {
-    padding: 20px;
+    position: absolute;
+    top: 1rem;
+    right: 0;
+    width: 290px;
     height: 300px;
+    padding: 1rem;
     background-color: #fff;
     box-shadow: var(--container_shadow);
-    border-radius: 1rem;
+    transform: translateX(100%);
+    transition: all ease-in-out 200ms;
+}
+
+.active {
+    transform: translateX(0);
 }
 
 .quiz_navigation ul {
@@ -25,4 +34,30 @@
 
 .quiz_navigation button:hover {
     transform: scale(1.02);
+}
+
+.actions {
+    cursor: pointer;
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 2px 0px rgba(17, 17, 26, 0.18);
+    font-size: 1.5rem;
+}
+
+@media (min-width:1200px) {
+    .quiz_navigation {
+        transform: translateX(0);
+        position: relative;
+        top: 0;
+        border-radius: 16px;
+    }
+    .actions {
+        display: none;
+    }
 }

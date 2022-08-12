@@ -8,6 +8,7 @@ const uiSlice = createSlice({
         activeCourseDetails: {},
         isShowCourseDetails: false, 
         isShowQuiz: false,
+        isShowQuizNavigation: false,
     },
     reducers: {
         toggleSidebar(state){
@@ -18,6 +19,9 @@ const uiSlice = createSlice({
         },
         toggleCourseDetails(state){
             state.isShowCourseDetails = !state.isShowCourseDetails;
+        },
+        toggleQuizNavigation(state){
+            state.isShowQuizNavigation = !state.isShowQuizNavigation;
         },
         setActiveCourseDetails(state,actions){
             state.activeCourseDetails = actions.payload;

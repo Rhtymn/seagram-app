@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 35px calc(100% - 35px - 2rem);
     column-gap: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .number {

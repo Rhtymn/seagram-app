@@ -30,6 +30,9 @@ const QuizPage = () => {
                     <NavigationItem active={true}>1</NavigationItem>
                     <NavigationItem>2</NavigationItem>
                     <NavigationItem>3</NavigationItem>
+                    <NavigationItem>4</NavigationItem>
+                    <NavigationItem>5</NavigationItem>
+                    <NavigationItem>6</NavigationItem>
                 </QuizNavigationContainer>
             </div>
         </div>
