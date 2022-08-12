@@ -18,7 +18,12 @@ const VERIFIED_COURSE = [
     {id:2, type:"verified", courseName:"Artificial Intelligence", instructor:"Robert"},
     {id:3, type:"verified", courseName:"Mathematics", instructor:"George"},
     {id:4, type:"verified", courseName:"Physics", instructor:"Thomas"},
-    {id:5, type:"verified", courseName:"Data Structure", instructor:"Lamela"}
+    {id:5, type:"verified", courseName:"Data Structure", instructor:"Lamela"},
+    {id:6, type:"verified", courseName:"Machine Learning", instructor:"Alan Turing"},
+    {id:7, type:"verified", courseName:"Artificial Intelligence", instructor:"Robert"},
+    {id:8, type:"verified", courseName:"Mathematics", instructor:"George"},
+    {id:9, type:"verified", courseName:"Physics", instructor:"Thomas"},
+    {id:10, type:"verified", courseName:"Data Structure", instructor:"Lamela"}
 ]
 
 

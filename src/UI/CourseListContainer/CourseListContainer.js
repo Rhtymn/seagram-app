@@ -3,12 +3,13 @@ import styles from './CourseListContainer.module.css';
 import SelectContainer from '../SelectContainer/SelectContainer';
 import Options from '../Options/Options';
 import OptionItem from '../Options/OptionItem';
-const Pagination = () => {
+
+const Pagination = (props) => {
   return <div className={`${styles.pagination}`}>
-    <div className={`${styles.prev}`}>
+    <div className={`${styles.prev}`} onClick={props.onPrevPage}>
       <i class="fa-solid fa-circle-chevron-left"></i>
     </div>
-    <div className={`${styles.next}`}>
+    <div className={`${styles.next}`} onClick={props.onNextPage}>
       <i class="fa-solid fa-circle-chevron-right"></i>
     </div>
   </div>
@@ -31,14 +32,15 @@ const CourseListContainer = (props) => {
             {props.children}
         </ul>
         <div className={`${styles.courseList_actions}`}>
-          <SelectContainer label={"Rows per page:"} selected={props.selectedRowNumber} onSelectClick={props.selectRowClickHandler}>
+          <SelectContainer label={"Course per page:"} selected={props.selectedRowNumber} onSelectClick={props.selectRowClickHandler}>
             <Options active={props.isShowRowOption}>
               <OptionItem onOptionClick={props.optionRowClickHandler}>5</OptionItem>
               <OptionItem onOptionClick={props.optionRowClickHandler}>10</OptionItem>
               <OptionItem onOptionClick={props.optionRowClickHandler}>15</OptionItem>
             </Options>
           </SelectContainer>
-          <Pagination/>
+          <div className={`${styles.page}`}>{`${props.start+1}-${props.end} of ${props.totalCourse}`}</div>
+          <Pagination onNextPage={props.nextPageHandler} onPrevPage={props.prevPageHandler}/>
         </div>
     </div>
   )

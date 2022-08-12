@@ -7,6 +7,7 @@ const verifiedCourseSlice = createSlice({
         selectedSortBy: "Name",
         isShowRowOption: false,
         isShowSortOption: false,
+        activePage:1,
     },
     reducers: {
         toggleRowOption(state){
@@ -20,6 +21,9 @@ const verifiedCourseSlice = createSlice({
         },
         setSelectedSortBy(state,actions){
             state.selectedSortBy = actions.payload;
+        },
+        setActivePage(state,actions){
+            state.activePage = actions.payload;
         }
     }
 })

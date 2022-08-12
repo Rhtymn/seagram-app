@@ -31,6 +31,9 @@ const StudentDashboard = () => {
   const selectedSortBy = useSelector((state)=>state.enrolledCourse.selectedSortBy);
   const isShowRowOption = useSelector((state)=>state.enrolledCourse.isShowRowOption);
   const isShowSortOption = useSelector((state)=>state.enrolledCourse.isShowSortOption);
+  const activePage = useSelector((state)=>state.enrolledCourse.activePage);
+  const totalCourse = enrolledCourse.length;
+  const maxPage = Math.ceil(totalCourse/ parseInt(selectedRowNumber)); 
 
   const selectSortClickHandler = () => {
     dispatch(enrolledCourseActions.toggleSortOption());
@@ -44,14 +47,26 @@ const StudentDashboard = () => {
   const optionRowClickHandler = (rowNumber) => {
     dispatch(enrolledCourseActions.setSelectedRowNumber(rowNumber));
   }
-
-  const ctx = {
-    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,
-    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler
+  const nextPageHandler = () => {
+    if (activePage + 1 > maxPage) return;
+    dispatch(enrolledCourseActions.setActivePage(activePage + 1));
+  } 
+  const prevPageHandler = () => {
+    if (activePage - 1 === 0) return;
+    dispatch(enrolledCourseActions.setActivePage(activePage - 1));
   }
 
-  const sortedEnrolledCourse = sortCourse(enrolledCourse,selectedSortBy)
-  const enrolledCourseList = sortedEnrolledCourse.map((course) => <EnrolledCourse key={course.id} {...course}/>)
+  const sortedEnrolledCourse = sortCourse(enrolledCourse,selectedSortBy);
+  const start = activePage*selectedRowNumber - selectedRowNumber;
+  const end = activePage*selectedRowNumber;
+  const enrolledCourseList = sortedEnrolledCourse.slice(start,end).map((course) => <EnrolledCourse key={course.id} {...course}/>)
+
+  const ctx = {
+    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,maxPage,activePage,start,end,totalCourse,
+    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler,
+    nextPageHandler, prevPageHandler
+  }
+
   const Content = <ContentContainer>
     <CourseListContainer listName="Enrolled Course" {...ctx}>
       {enrolledCourseList}

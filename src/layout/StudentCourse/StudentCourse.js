@@ -19,11 +19,13 @@ const StudentCourse = () => {
   const isShowCourseDetails = useSelector((state)=>state.ui.isShowCourseDetails);
   const verifiedCourse = useSelector((state) => state.course.verifiedCourse);
   
-
   const selectedRowNumber = useSelector((state)=>state.verifiedCourse.selectedRowNumber);
   const selectedSortBy = useSelector((state)=>state.verifiedCourse.selectedSortBy);
   const isShowRowOption = useSelector((state)=>state.verifiedCourse.isShowRowOption);
   const isShowSortOption = useSelector((state)=>state.verifiedCourse.isShowSortOption);
+  const activePage = useSelector((state)=>state.verifiedCourse.activePage);
+  const totalCourse = verifiedCourse.length;
+  const maxPage = Math.ceil(totalCourse / parseInt(selectedRowNumber)); 
 
   const selectSortClickHandler = () => {
     dispatch(verifiedCourseActions.toggleSortOption());
@@ -37,14 +39,25 @@ const StudentCourse = () => {
   const optionRowClickHandler = (rowNumber) => {
     dispatch(verifiedCourseActions.setSelectedRowNumber(rowNumber));
   }
-
-  const ctx = {
-    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,
-    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler
+  const nextPageHandler = () => {
+    if (activePage + 1 > maxPage) return;
+    dispatch(verifiedCourseActions.setActivePage(activePage + 1));
+  } 
+  const prevPageHandler = () => {
+    if (activePage - 1 === 0) return;
+    dispatch(verifiedCourseActions.setActivePage(activePage - 1));
   }
 
   const sortedVerifiedCourse = sortCourse(verifiedCourse, selectedSortBy);
-  const verifiedCourseList = sortedVerifiedCourse.map((course) => <VerifiedCourse key={course.id} {...course}/>)
+  const start = activePage*selectedRowNumber - selectedRowNumber;
+  const end = activePage*selectedRowNumber;
+  const verifiedCourseList = sortedVerifiedCourse.slice(start,end).map((course) => <VerifiedCourse key={course.id} {...course}/>)
+
+  const ctx = {
+    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,maxPage,activePage,start,end,totalCourse,
+    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler,
+    nextPageHandler, prevPageHandler
+  }
 
   const Content = <ContentContainer>
     <CourseListContainer listName="Verified Course" {...ctx}>
