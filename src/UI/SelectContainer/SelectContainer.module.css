@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+}
+
+.container .label {
+    padding: 8px 0;
+}
+
+.select_container {
+    position: relative;
+    text-align: center;
+}
+
+.select_container .selected {
+    margin-bottom: 5px;
+}
+
+.select_container .selected span {
+    margin-right: 8px;
+}
+
+.select_container .selected {
+    overflow: hidden;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+

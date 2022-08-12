@@ -14,7 +14,6 @@
     box-shadow: rgb(145 158 171 / 20%) 0px 3px 1px -2px, rgb(145 158 171 / 14%) 0px 2px 2px 0px, rgb(145 158 171 / 12%) 0px 1px 5px 0px;
 }
 
-
 .enrolledCourse_container h1 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -50,11 +49,6 @@
     cursor: pointer;
 }
 
-.row_options_container {
-    margin-right: 1rem;
-    display: flex;
-}
-
 @media (min-width:768px) {
     .enrolledCourse_container {
         width: 400px;
@@ -81,60 +75,4 @@
     .enrolledCourse_container ul {
         grid-template-columns: repeat(3,350px)
     }
-}
-
-.select_box{
-    width: 50px;
-    display: flex;
-    text-align: center;
-    flex-direction: column-reverse;
-}
-
-.selected {
-    margin-bottom: 0.5rem;
-    position: relative;
-}
-
-.selected span {
-    margin-right: 0.5rem;
-}
-
-.select_box .options_container.active {
-    max-height: 200px;
-    opacity: 1;
-}
-
-.select_box .options_container {
-    background-color: #fff;
-    box-shadow: rgb(145 158 171 / 20%) 0px 5px 5px -3px, rgb(145 158 171 / 14%) 0px 8px 10px 1px, rgb(145 158 171 / 12%) 0px 3px 14px 2px;
-    max-height: 0;
-    opacity: 0;
-    transition: all 0.4s;
-    border-radius: 8px;
-    overflow: hidden;
-    position: absolute;
-    top: 30px;
-    width: 50px
-}
-
-.select_box .option, .selected {
-    cursor: pointer;
-    padding: 3px;
-}
-
-.select_box .option:hover {
-    background-color: rgba(32, 101, 209, 0.08);
-}
-
-.select_box .option.active {
-    background-color: rgba(32, 101, 209, 0.08);
-}
-
-.select_box label {
-    cursor: pointer;
-    pointer-events: none;
-}
-
-.select_box .option input {
-    display: none;
 }
