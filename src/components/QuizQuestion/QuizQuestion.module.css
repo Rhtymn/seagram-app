@@ -1,0 +1,16 @@
+.quiz_question {
+    display: grid;
+    grid-template-columns: 35px calc(100% - 35px - 2rem);
+    column-gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.number {
+    width: 35px;
+    height: 35px;
+    background-color: rgb(32, 101, 209);
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    line-height: 35px;
+}

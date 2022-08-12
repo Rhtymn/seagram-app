@@ -1,0 +1,28 @@
+.quiz_navigation {
+    padding: 20px;
+    height: 300px;
+    background-color: #fff;
+    box-shadow: var(--container_shadow);
+    border-radius: 1rem;
+}
+
+.quiz_navigation ul {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 42px);
+    gap: 10px;
+}
+
+.quiz_navigation button{
+    margin-top: 1rem;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+}
+
+.quiz_navigation button:hover {
+    transform: scale(1.02);
+}

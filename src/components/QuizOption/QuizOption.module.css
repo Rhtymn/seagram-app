@@ -1,0 +1,20 @@
+.quiz_option ul{
+    list-style: none;
+}
+
+.quiz_option ul li {
+    min-height: 50px;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+    border: 1px solid rgb(32, 101, 209);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    cursor: pointer;
+}
+
+.quiz_option ul li:hover {
+    color: white;
+    background-color: rgb(32, 101, 209);;
+}

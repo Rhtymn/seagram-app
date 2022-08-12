@@ -1,0 +1,9 @@
+.quiz_actions {
+    width: 200px;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+}
