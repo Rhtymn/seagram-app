@@ -6,9 +6,9 @@ import StudentPage from './pages/StudentPage/StudentPage';
 import StudentDashboard from './layout/StudentDashboard/StudentDashboard';
 import StudentCourse from './layout/StudentCourse/StudentCourse';
 import QuizPage from './pages/QuizPage/QuizPage';
+import InstructorPage from './pages/InstructorPage/InstructorPage';
 
 // TODO
-// 1. Implement pagination & sorting on course list
 
 function App() {
   return <Router>
@@ -20,6 +20,7 @@ function App() {
         <Route path="course" element={<StudentCourse/>}></Route>
       </Route>
       <Route path='quiz' element={<QuizPage/>}/>
+      <Route path='instructor' element={<InstructorPage/>}></Route>
     </Routes>
   </Router>
 }
