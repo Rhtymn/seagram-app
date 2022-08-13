@@ -3,7 +3,7 @@ import styles from './EnrolledCourseDetails.module.css';
 import { useSelector } from 'react-redux';
 
 const EnrolledCourseDetails = () => {
-    const courseInfo = useSelector((state)=>state.ui.activeCourseDetails);
+    const courseInfo = useSelector((state)=>state.uiStudent.activeCourseDetails);
     return (
     <>
         <div className={`${styles.course_information}`}>

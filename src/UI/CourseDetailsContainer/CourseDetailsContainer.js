@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './CourseDetailsContainer.module.css';
 import { useDispatch } from 'react-redux';
-import { uiActions } from '../../store/ui-slice';
+import { uiStudentActions } from '../../store/ui-student-slice';
 
 const CourseDetailsContainer = (props) => {
   const dispatch = useDispatch();
   const toggleCourseDetails = () => {
-    dispatch(uiActions.toggleCourseDetails());
+    dispatch(uiStudentActions.toggleCourseDetails());
   }
 
   return (ReactDOM.createPortal(

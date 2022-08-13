@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Button from "../../UI/Button/Button";
 
 const VerifiedCourseDetails = () => {
-    const courseInfo = useSelector((state)=>state.ui.activeCourseDetails);
+    const courseInfo = useSelector((state)=>state.uiStudent.activeCourseDetails);
     return (
     <>
         <div className={`${styles.course_information}`}>

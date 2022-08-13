@@ -16,7 +16,7 @@ const VerifiedCourse = (props) => {
 
 const StudentCourse = () => {
   const dispatch = useDispatch();
-  const isShowCourseDetails = useSelector((state)=>state.ui.isShowCourseDetails);
+  const isShowCourseDetails = useSelector((state)=>state.uiStudent.isShowCourseDetails);
   const verifiedCourse = useSelector((state) => state.course.verifiedCourse);
   
   const selectedRowNumber = useSelector((state)=>state.verifiedCourse.selectedRowNumber);

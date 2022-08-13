@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const uiSlice = createSlice({
-    name: 'ui',
+const uiStudentSlice = createSlice({
+    name: 'uiStudent',
     initialState: {
         activeSideNav: "dashboard",
         activeCourseDetails: {},
@@ -30,5 +30,5 @@ const uiSlice = createSlice({
     }
 })
 
-export const uiActions = uiSlice.actions;
-export default uiSlice;
+export const uiStudentActions = uiStudentSlice.actions;
+export default uiStudentSlice;

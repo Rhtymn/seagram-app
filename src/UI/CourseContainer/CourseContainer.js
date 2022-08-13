@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './CourseContainer.module.css';
 import { useDispatch } from 'react-redux';
-import { uiActions } from '../../store/ui-slice';
+import { uiStudentActions } from '../../store/ui-student-slice';
 
 const CourseContainer = (props) => {
   const dispatch = useDispatch();
@@ -13,8 +13,8 @@ const CourseContainer = (props) => {
       instructor: props.instructor,
       progress: props.progress,
     }
-    dispatch(uiActions.setActiveCourseDetails(courseDetails));
-    dispatch(uiActions.toggleCourseDetails());
+    dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
+    dispatch(uiStudentActions.toggleCourseDetails());
   }
 
   return (

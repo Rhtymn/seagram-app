@@ -24,7 +24,7 @@ const EnrolledCourse = (props) => {
 
 const StudentDashboard = () => {
   const dispatch = useDispatch();
-  const isShowCourseDetails = useSelector((state)=>state.ui.isShowCourseDetails);
+  const isShowCourseDetails = useSelector((state)=>state.uiStudent.isShowCourseDetails);
   const enrolledCourse = useSelector((state) => state.course.enrolledCourse);
 
   const selectedRowNumber = useSelector((state)=>state.enrolledCourse.selectedRowNumber);

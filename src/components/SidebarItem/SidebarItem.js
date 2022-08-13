@@ -2,14 +2,14 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 import styles from './SidebarItem.module.css';
 import { useDispatch } from 'react-redux/es/exports';
-import { uiActions } from '../../store/ui-slice';
+import { uiStudentActions } from '../../store/ui-student-slice';
 
 const SidebarItem = (props) => {
   const dispatch = useDispatch();
 
   const sideNavClickHandler = () => {
-    dispatch(uiActions.toggleSidebar());
-    dispatch(uiActions.toggleActiveSideNav(props.label.toLowerCase()));
+    dispatch(uiStudentActions.toggleSidebar());
+    dispatch(uiStudentActions.toggleActiveSideNav(props.label.toLowerCase()));
   }
   
   const liClasses = props.active ? `${styles.active}` : ``;

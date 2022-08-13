@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './Navbar.module.css';
 import LogoutButton from '../LogoutButton/LogoutButton';
 import {useDispatch} from 'react-redux'
-import {uiActions} from '../../store/ui-slice'
+import {uiStudentActions} from '../../store/ui-student-slice'
 
 const RNavbar = () => {
     const dispatch = useDispatch();
 
     const toggleSidebarHandler = () => {
-        dispatch(uiActions.toggleSidebar());
+        dispatch(uiStudentActions.toggleSidebar());
     }
 
     return <nav className={`${styles.navbar}`}>

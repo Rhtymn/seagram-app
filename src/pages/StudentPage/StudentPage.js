@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 
 const StudentPage = () => {
-  const activeSideNav = useSelector((state)=>state.ui.activeSideNav);
+  const activeSideNav = useSelector((state)=>state.uiStudent.activeSideNav);
   return (
     <div className={`${styles.student_page}`}>
         <Navbar/>

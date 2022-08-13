@@ -1,15 +1,15 @@
 import React from 'react'
 import styles from './QuizNavigationContainer.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { uiActions } from '../../store/ui-slice';
+import { uiStudentActions } from '../../store/ui-student-slice';
 
 const QuizNavigationContainer = (props) => {
   const dispatch = useDispatch();
-  const isShowNavigation = useSelector((state)=>state.ui.isShowQuizNavigation);
+  const isShowNavigation = useSelector((state)=>state.uiStudent.isShowQuizNavigation);
   const navigationClasses = isShowNavigation ? `${styles.quiz_navigation} ${styles.active}` : `${styles.quiz_navigation}`;
 
   const toggleNavigationHandler = () => {
-    dispatch(uiActions.toggleQuizNavigation());
+    dispatch(uiStudentActions.toggleQuizNavigation());
   }
 
   return (
