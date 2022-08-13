@@ -16,8 +16,6 @@ const Pagination = (props) => {
 }
 
 const CourseListContainer = (props) => {
-  const courseType = props.children[0].props.type;
-
   return (
     <div className={`${styles.enrolledCourse_container}`}>
         <h1>{props.listName}</h1>
@@ -25,7 +23,7 @@ const CourseListContainer = (props) => {
           <Options active={props.isShowSortOption}>
             <OptionItem onOptionClick={props.optionSortClickHandler}>Name</OptionItem>
             <OptionItem onOptionClick={props.optionSortClickHandler}>Instructor</OptionItem>
-            {courseType === 'enrolled' && <OptionItem onOptionClick={props.optionSortClickHandler}>Progress</OptionItem>}
+            {props.courseType === 'enrolled' && <OptionItem onOptionClick={props.optionSortClickHandler}>Progress</OptionItem>}
           </Options>
         </SelectContainer>
         <ul>

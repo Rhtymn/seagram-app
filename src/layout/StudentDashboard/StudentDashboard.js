@@ -7,6 +7,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import CourseDetailsContainer from '../../UI/CourseDetailsContainer/CourseDetailsContainer';
 import EnrolledCourseDetails from '../../components/EnrolledCourseDetails/EnrolledCourseDetails';
 import { enrolledCourseActions } from '../../store/enrolledCourse-slice';
+import { uiStudentActions } from '../../store/ui-student-slice';
 import {sortCourse} from "../../Helper"
 
 const ProgressBar = (props) => {
@@ -17,7 +18,20 @@ const ProgressBar = (props) => {
 }
 
 const EnrolledCourse = (props) => {
-  return <CourseContainer {...props}>
+  const dispatch = useDispatch();
+  const courseClickHandler = () => {
+    const courseDetails = {
+      id: props.id,
+      type: props.type,
+      courseName: props.courseName,
+      instructor: props.instructor,
+      progress: props.progress,
+    }
+    dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
+    dispatch(uiStudentActions.toggleCourseDetails());
+  }
+
+  return <CourseContainer {...props} courseType="enrolled" onClickCourse={courseClickHandler}>
         <ProgressBar progress={props.progress}/>
     </CourseContainer>
 }
@@ -68,7 +82,7 @@ const StudentDashboard = () => {
   }
 
   const Content = <ContentContainer>
-    <CourseListContainer listName="Enrolled Course" {...ctx}>
+    <CourseListContainer listName="Enrolled Course" {...ctx} courseType="enrolled">
       {enrolledCourseList}
     </CourseListContainer>
   </ContentContainer>

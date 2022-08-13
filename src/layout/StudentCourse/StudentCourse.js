@@ -8,9 +8,23 @@ import CourseDetailsContainer from '../../UI/CourseDetailsContainer/CourseDetail
 import VerifiedCourseDetails from '../../components/VerifiedCourseDetails/VerifiedCourseDetails';
 import { verifiedCourseActions } from '../../store/verifiedCourse-slice';
 import {sortCourse} from "../../Helper"
+import { uiStudentActions } from '../../store/ui-student-slice';
 
 const VerifiedCourse = (props) => {
-  return <CourseContainer {...props}>
+  const dispatch = useDispatch();
+  const courseClickHandler = () => {
+    const courseDetails = {
+      id: props.id,
+      type: props.type,
+      courseName: props.courseName,
+      instructor: props.instructor,
+      progress: props.progress,
+    }
+    dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
+    dispatch(uiStudentActions.toggleCourseDetails());
+  }
+
+  return <CourseContainer {...props} courseType="verified" onClickCourse={courseClickHandler}>
   </CourseContainer>;
 }
 
@@ -60,7 +74,7 @@ const StudentCourse = () => {
   }
 
   const Content = <ContentContainer>
-    <CourseListContainer listName="Verified Course" {...ctx}>
+    <CourseListContainer listName="Verified Course" {...ctx} courseType="verified">
       {verifiedCourseList}
     </CourseListContainer>
   </ContentContainer>

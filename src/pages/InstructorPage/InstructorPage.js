@@ -3,8 +3,9 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './InstructorPage.module.css';
 import SidebarItem from '../../components/SidebarItem/SidebarItem';
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux';
 import { uiInstructorActions } from '../../store/ui-instructor-slice';
+import { Outlet } from "react-router-dom";
 
 const InstructorPage = () => {
     const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const InstructorPage = () => {
                             <i class="fa-solid fa-book-open"></i>
                     </SidebarItem>
                 </Sidebar>
+                <Outlet/>
             </div>
         </div>
     )
