@@ -1,0 +1,26 @@
+.student_dashboard{
+    min-height: 120vh;
+    width: 90%;
+}
+
+.course_progress {
+    margin-top: 0.5rem;
+    font-size: 0.2rem;
+}
+
+.progress_bar {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+.progress_bar::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 10px;
+    background-color: black;
+    width: 35%;
+}

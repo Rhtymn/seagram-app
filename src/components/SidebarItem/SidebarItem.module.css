@@ -1,0 +1,23 @@
+:root{
+    --sidebar_item_text: rgb(99, 115, 129);
+    --sidebar_item_text_hover: rgb(32, 101, 209);
+    --sidebar_item_hover: rgba(32, 101, 209, 0.08);
+}
+
+.icon{
+    font-size: 1.5rem;
+}
+
+.active{
+    background-color: var(--sidebar_item_hover);
+    color: var(--sidebar_item_text_hover);
+}
+
+a{
+    color: var(--sidebar_item_text);
+    text-decoration: none;
+}
+
+a:hover{
+    color: var(--sidebar_item_text_hover);
+}
