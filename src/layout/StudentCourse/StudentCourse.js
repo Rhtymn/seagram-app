@@ -14,6 +14,9 @@ import SelectContainer from '../../UI/SelectContainer/SelectContainer';
 import Options from '../../UI/Options/Options';
 import OptionItem from '../../UI/Options/OptionItem';
 
+import useSort from '../../hooks/useSort';
+import usePagination from '../../hooks/usePagination';
+
 const VerifiedCourse = (props) => {
   const dispatch = useDispatch();
   const courseClickHandler = () => {
@@ -33,45 +36,24 @@ const VerifiedCourse = (props) => {
 }
 
 const StudentCourse = () => {
-  const dispatch = useDispatch();
   const isShowCourseDetails = useSelector((state)=>state.uiStudent.isShowCourseDetails);
   const verifiedCourse = useSelector((state) => state.course.verifiedCourse);
+  const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("verifiedCourse", verifiedCourseActions);
+
+  const pagination = usePagination("enrolledCourse", verifiedCourseActions, verifiedCourse);
+  const sortedCourseProgram = sortCourse(verifiedCourse,selectedSortBy);
   
-  const selectedRowNumber = useSelector((state)=>state.verifiedCourse.selectedRowNumber);
-  const selectedSortBy = useSelector((state)=>state.verifiedCourse.selectedSortBy);
-  const isShowRowOption = useSelector((state)=>state.verifiedCourse.isShowRowOption);
-  const isShowSortOption = useSelector((state)=>state.verifiedCourse.isShowSortOption);
-  const activePage = useSelector((state)=>state.verifiedCourse.activePage);
-  const totalCourse = verifiedCourse.length;
-  const maxPage = Math.ceil(totalCourse / parseInt(selectedRowNumber)); 
+  const start = pagination.activePage*pagination.selectedRowNumber - pagination.selectedRowNumber;
+  const end = pagination.activePage*pagination.selectedRowNumber;
+  const verifiedCourseList = sortedCourseProgram.slice(start,end).map((course) => <VerifiedCourse key={course.id} {...course}/>)
 
-  const selectSortClickHandler = () => {
-    dispatch(verifiedCourseActions.toggleSortOption());
-  }
-  const optionSortClickHandler = (sortBy) => {
-    dispatch(verifiedCourseActions.setSelectedSortBy(sortBy));
-  }
-  const selectRowClickHandler = () => {
-    dispatch(verifiedCourseActions.toggleRowOption());
-  }
-  const optionRowClickHandler = (rowNumber) => {
-    dispatch(verifiedCourseActions.setSelectedRowNumber(rowNumber));
-  }
-  const nextPageHandler = () => {
-    if (activePage + 1 > maxPage) return;
-    dispatch(verifiedCourseActions.setActivePage(activePage + 1));
-  } 
-  const prevPageHandler = () => {
-    if (activePage - 1 === 0) return;
-    dispatch(verifiedCourseActions.setActivePage(activePage - 1));
-  }
-
-  const sortedVerifiedCourse = sortCourse(verifiedCourse, selectedSortBy);
-  const start = activePage*selectedRowNumber - selectedRowNumber;
-  const end = activePage*selectedRowNumber;
-  const verifiedCourseList = sortedVerifiedCourse.slice(start,end).map((course) => <VerifiedCourse key={course.id} {...course}/>)
-
-  const ctx = {nextPageHandler, prevPageHandler, start, end, totalCourse}
+  const ctx = {
+    nextPageHandler: pagination.nextPageHandler,
+    prevPageHandler: pagination.prevPageHandler,
+    start,
+    end,
+    totalCourse: pagination.totalCourse
+  };
 
   const Content = <ContentContainer>
     <CourseListContainer listName="Verified Course" {...ctx} courseType="verified">
@@ -82,11 +64,11 @@ const StudentCourse = () => {
         </Options>
       </SelectContainer>
       {verifiedCourseList}
-      <SelectContainer label={"Course per page:"} selected={selectedRowNumber} onSelectClick={selectRowClickHandler}>
-          <Options active={isShowRowOption}>
-            <OptionItem onOptionClick={optionRowClickHandler}>5</OptionItem>
-            <OptionItem onOptionClick={optionRowClickHandler}>10</OptionItem>
-            <OptionItem onOptionClick={optionRowClickHandler}>15</OptionItem>
+      <SelectContainer label={"Course per page:"} selected={pagination.selectedRowNumber} onSelectClick={pagination.selectRowClickHandler}>
+          <Options active={pagination.isShowRowOption}>
+            <OptionItem onOptionClick={pagination.optionRowClickHandler}>5</OptionItem>
+            <OptionItem onOptionClick={pagination.optionRowClickHandler}>10</OptionItem>
+            <OptionItem onOptionClick={pagination.optionRowClickHandler}>15</OptionItem>
           </Options>
       </SelectContainer>
     </CourseListContainer>

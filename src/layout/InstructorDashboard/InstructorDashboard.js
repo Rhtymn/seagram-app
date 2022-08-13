@@ -9,6 +9,8 @@ import {sortCourse} from "../../Helper"
 import SelectContainer from '../../UI/SelectContainer/SelectContainer';
 import Options from '../../UI/Options/Options';
 import OptionItem from '../../UI/Options/OptionItem';
+import useSort from '../../hooks/useSort';
+import usePagination from "../../hooks/usePagination";
 
 const CourseProgram = (props) => {
   return <CourseContainer {...props} courseType="courseProgram">
@@ -16,44 +18,23 @@ const CourseProgram = (props) => {
 }
 
 const InstructorDashboard = () => {
-  const dispatch = useDispatch();
   const courseProgram = useSelector((state)=>state.course.courseProgram);
-
-  const selectedRowNumber = useSelector((state)=>state.courseProgram.selectedRowNumber);
-  const selectedSortBy = useSelector((state)=>state.courseProgram.selectedSortBy);
-  const isShowRowOption = useSelector((state)=>state.courseProgram.isShowRowOption);
-  const isShowSortOption = useSelector((state)=>state.courseProgram.isShowSortOption);
-  const activePage = useSelector((state)=>state.courseProgram.activePage);
-  const totalCourse = courseProgram.length;
-  const maxPage = Math.ceil(totalCourse/ parseInt(selectedRowNumber)); 
-
-  const selectSortClickHandler = () => {
-    dispatch(courseProgramActions.toggleSortOption());
-  }
-  const optionSortClickHandler = (sortBy) => {
-    dispatch(courseProgramActions.setSelectedSortBy(sortBy));
-  }
-  const selectRowClickHandler = () => {
-    dispatch(courseProgramActions.toggleRowOption());
-  }
-  const optionRowClickHandler = (rowNumber) => {
-    dispatch(courseProgramActions.setSelectedRowNumber(rowNumber));
-  }
-  const nextPageHandler = () => {
-    if (activePage + 1 > maxPage) return;
-    dispatch(courseProgramActions.setActivePage(activePage + 1));
-  } 
-  const prevPageHandler = () => {
-    if (activePage - 1 === 0) return;
-    dispatch(courseProgramActions.setActivePage(activePage - 1));
-  }
-
+  const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("courseProgram", courseProgramActions);
+  const pagination = usePagination("courseProgram", courseProgramActions, courseProgram)
   const sortedCourseProgram = sortCourse(courseProgram,selectedSortBy);
-  const start = activePage*selectedRowNumber - selectedRowNumber;
-  const end = activePage*selectedRowNumber;
+  
+  const start = pagination.activePage*pagination.selectedRowNumber - pagination.selectedRowNumber;
+  const end = pagination.activePage*pagination.selectedRowNumber;
   const courseProgramList = sortedCourseProgram.slice(start,end).map((course) => <CourseProgram key={course.id} {...course}/>)
 
-  const ctx = {nextPageHandler,prevPageHandler, start, end, totalCourse};
+  const ctx = {
+    nextPageHandler: pagination.nextPageHandler,
+    prevPageHandler: pagination.prevPageHandler,
+    start,
+    end,
+    totalCourse: pagination.totalCourse
+  };
+
   const Content = <ContentContainer>
     <CourseListContainer listName="Course Program" {...ctx}>
       <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
@@ -63,11 +44,11 @@ const InstructorDashboard = () => {
         </Options>
       </SelectContainer>
       {courseProgramList}
-      <SelectContainer label={"Course per page:"} selected={selectedRowNumber} onSelectClick={selectRowClickHandler}>
-          <Options active={isShowRowOption}>
-            <OptionItem onOptionClick={optionRowClickHandler}>5</OptionItem>
-            <OptionItem onOptionClick={optionRowClickHandler}>10</OptionItem>
-            <OptionItem onOptionClick={optionRowClickHandler}>15</OptionItem>
+      <SelectContainer label={"Course per page:"} selected={pagination.selectedRowNumber} onSelectClick={pagination.selectRowClickHandler}>
+          <Options active={pagination.isShowRowOption}>
+            <OptionItem onOptionClick={pagination.optionRowClickHandler}>5</OptionItem>
+            <OptionItem onOptionClick={pagination.optionRowClickHandler}>10</OptionItem>
+            <OptionItem onOptionClick={pagination.optionRowClickHandler}>15</OptionItem>
           </Options>
       </SelectContainer>
     </CourseListContainer>
