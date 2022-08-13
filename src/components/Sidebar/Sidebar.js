@@ -3,7 +3,7 @@ import SidebarContainer from '../../UI/SidebarContainer/SidebarContainer';
 
 const Sidebar = (props) => {
     return (
-    <SidebarContainer>
+    <SidebarContainer show={props.show}>
         {props.children}
     </SidebarContainer>
 )

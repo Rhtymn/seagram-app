@@ -1,11 +1,8 @@
 import React from 'react';
 import styles from './SidebarContainer.module.css';
-import {useSelector} from 'react-redux';
 
 const SidebarContainer = (props) => {
-    const isShowSidebar = useSelector((state) => state.uiStudent.isShowSidebar);
-    const sidebarClasses = isShowSidebar? `${styles.sidebar} ${styles.show_sidebar}` : `${styles.sidebar}`;
-
+    const sidebarClasses = props.show? `${styles.sidebar} ${styles.show_sidebar}` : `${styles.sidebar}`;
     return (
         <div className={sidebarClasses}>
             <h1 className="d-none d-md-block">Seagram</h1>
