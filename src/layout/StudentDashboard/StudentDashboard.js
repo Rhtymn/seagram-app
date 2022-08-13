@@ -10,6 +10,10 @@ import { enrolledCourseActions } from '../../store/enrolledCourse-slice';
 import { uiStudentActions } from '../../store/ui-student-slice';
 import {sortCourse} from "../../Helper"
 
+import SelectContainer from '../../UI/SelectContainer/SelectContainer';
+import Options from '../../UI/Options/Options';
+import OptionItem from '../../UI/Options/OptionItem';
+
 const ProgressBar = (props) => {
   return <div className={`${styles.course_progress}`}>
   <div className={`${styles.progress_bar}`}></div>
@@ -75,15 +79,25 @@ const StudentDashboard = () => {
   const end = activePage*selectedRowNumber;
   const enrolledCourseList = sortedEnrolledCourse.slice(start,end).map((course) => <EnrolledCourse key={course.id} {...course}/>)
 
-  const ctx = {
-    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,maxPage,activePage,start,end,totalCourse,
-    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler,
-    nextPageHandler, prevPageHandler
-  }
+  const ctx = {nextPageHandler, prevPageHandler}
 
   const Content = <ContentContainer>
-    <CourseListContainer listName="Enrolled Course" {...ctx} courseType="enrolled">
+    <CourseListContainer listName="Enrolled Course" {...ctx}>
+      <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
+        <Options active={isShowSortOption}>
+          <OptionItem onOptionClick={optionSortClickHandler}>Name</OptionItem>
+          <OptionItem onOptionClick={optionSortClickHandler}>Instructor</OptionItem>
+          <OptionItem onOptionClick={optionSortClickHandler}>Progress</OptionItem>
+        </Options>
+      </SelectContainer>
       {enrolledCourseList}
+      <SelectContainer label={"Course per page:"} selected={selectedRowNumber} onSelectClick={selectRowClickHandler}>
+          <Options active={isShowRowOption}>
+            <OptionItem onOptionClick={optionRowClickHandler}>5</OptionItem>
+            <OptionItem onOptionClick={optionRowClickHandler}>10</OptionItem>
+            <OptionItem onOptionClick={optionRowClickHandler}>15</OptionItem>
+          </Options>
+      </SelectContainer>
     </CourseListContainer>
   </ContentContainer>
 

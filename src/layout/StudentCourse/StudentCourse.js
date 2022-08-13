@@ -10,6 +10,10 @@ import { verifiedCourseActions } from '../../store/verifiedCourse-slice';
 import {sortCourse} from "../../Helper"
 import { uiStudentActions } from '../../store/ui-student-slice';
 
+import SelectContainer from '../../UI/SelectContainer/SelectContainer';
+import Options from '../../UI/Options/Options';
+import OptionItem from '../../UI/Options/OptionItem';
+
 const VerifiedCourse = (props) => {
   const dispatch = useDispatch();
   const courseClickHandler = () => {
@@ -67,15 +71,24 @@ const StudentCourse = () => {
   const end = activePage*selectedRowNumber;
   const verifiedCourseList = sortedVerifiedCourse.slice(start,end).map((course) => <VerifiedCourse key={course.id} {...course}/>)
 
-  const ctx = {
-    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,maxPage,activePage,start,end,totalCourse,
-    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler,
-    nextPageHandler, prevPageHandler
-  }
+  const ctx = {nextPageHandler, prevPageHandler, start, end, totalCourse}
 
   const Content = <ContentContainer>
     <CourseListContainer listName="Verified Course" {...ctx} courseType="verified">
+      <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
+        <Options active={isShowSortOption}>
+          <OptionItem onOptionClick={optionSortClickHandler}>Name</OptionItem>
+          <OptionItem onOptionClick={optionSortClickHandler}>Instructor</OptionItem>
+        </Options>
+      </SelectContainer>
       {verifiedCourseList}
+      <SelectContainer label={"Course per page:"} selected={selectedRowNumber} onSelectClick={selectRowClickHandler}>
+          <Options active={isShowRowOption}>
+            <OptionItem onOptionClick={optionRowClickHandler}>5</OptionItem>
+            <OptionItem onOptionClick={optionRowClickHandler}>10</OptionItem>
+            <OptionItem onOptionClick={optionRowClickHandler}>15</OptionItem>
+          </Options>
+      </SelectContainer>
     </CourseListContainer>
   </ContentContainer>
 

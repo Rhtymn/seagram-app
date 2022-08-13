@@ -15,4 +15,9 @@ export const sortCourse = (courseList, sortBy) => {
             return parseInt(a.progress) > parseInt(b.progress) ? 1 : -1;
         })
     }
+    if (sortBy === "Enrolled") {
+        return result.sort((a,b) => {
+            return parseInt(a.enrolledStudent) > parseInt(b.enrolledStudent) ? 1 : -1;
+        })
+    }
 }

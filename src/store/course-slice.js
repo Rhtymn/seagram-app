@@ -28,15 +28,15 @@ const VERIFIED_COURSE = [
 
 const COURSE_PROGRAM = [
     {id:1, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:10},
-    {id:2, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:10},
-    {id:3, courseName:"Mathematics", instructor:"George", enrolledStudent:10},
-    {id:4, courseName:"Physics", instructor:"Thomas", enrolledStudent:10},
-    {id:5, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:10},
-    {id:6, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:10},
-    {id:7, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:10},
-    {id:8, courseName:"Mathematics", instructor:"George", enrolledStudent:10},
-    {id:9, courseName:"Physics", instructor:"Thomas", enrolledStudent:10},
-    {id:10, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:10}
+    {id:2, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:5},
+    {id:3, courseName:"Mathematics", instructor:"George", enrolledStudent:15},
+    {id:4, courseName:"Physics", instructor:"Thomas", enrolledStudent:14},
+    {id:5, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:21},
+    {id:6, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:29},
+    {id:7, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:13},
+    {id:8, courseName:"Mathematics", instructor:"George", enrolledStudent:16},
+    {id:9, courseName:"Physics", instructor:"Thomas", enrolledStudent:5},
+    {id:10, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:4}
 ]
 
 const courseSlice = createSlice({
