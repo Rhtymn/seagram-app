@@ -25,4 +25,5 @@ export const sortCourse = (courseList, sortBy) => {
             return a.date > b.date ? 1 : -1;
         })
     }
+    return result;
 }

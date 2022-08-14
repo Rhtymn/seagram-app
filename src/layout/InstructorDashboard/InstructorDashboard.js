@@ -6,6 +6,7 @@ import SelectContainer from '../../UI/SelectContainer/SelectContainer';
 import Options from '../../UI/Options/Options';
 import OptionItem from '../../UI/Options/OptionItem';
 import useSort from '../../hooks/useSort';
+import useStatus from "../../hooks/useStatus";
 import { courseProgramActions } from '../../store/courseProgram-slice';
 import { sortCourse } from '../../Helper';
 
@@ -59,31 +60,55 @@ const Row = (props) => {
 
 const InstructorDashboard = () => {
     const courseProgram = useSelector((state)=>state.course.courseProgram);
+    const status = useSelector((state)=>state.courseProgram.selectedStatus);
     const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("courseProgram", courseProgramActions);
+    const {selectedStatus, isShowStatusOption, selectStatusClickHandler, optionStatusClickHandler} = useStatus("courseProgram", courseProgramActions);
     const sortedCourseProgram = sortCourse(courseProgram, selectedSortBy);
-    const courseProgramList = sortedCourseProgram.map((course)=><Row {...course}></Row>)
+
+    let courseProgramList;
+    if (status !== "All") {
+        courseProgramList = sortedCourseProgram.filter((course)=>course.status === status.toLowerCase()).map((course)=><Row {...course}/>);
+    } else {
+        courseProgramList = sortedCourseProgram.map((course)=><Row {...course}></Row>)
+    }
+
+    const sortSelector = <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
+        <Options active={isShowSortOption}>
+            <OptionItem onOptionClick={optionSortClickHandler}>Name</OptionItem>
+            <OptionItem onOptionClick={optionSortClickHandler}>Enrolled</OptionItem>
+            <OptionItem onOptionClick={optionSortClickHandler}>Date</OptionItem>
+        </Options>
+    </SelectContainer>
+
+    const statusSelector = <SelectContainer label="Status:" selected={selectedStatus} onSelectClick={selectStatusClickHandler}>
+        <Options active={isShowStatusOption}>
+            <OptionItem onOptionClick={optionStatusClickHandler}>All</OptionItem>
+            <OptionItem onOptionClick={optionStatusClickHandler}>Pending</OptionItem>
+            <OptionItem onOptionClick={optionStatusClickHandler}>Verified</OptionItem>
+            <OptionItem onOptionClick={optionStatusClickHandler}>Rejected</OptionItem>
+        </Options>
+    </SelectContainer>
+
+    const Tabel = <Table>
+        <Header>
+            <Column>Name</Column>
+            <Column>Description</Column>
+            <Column>Students</Column>
+            <Column>Date</Column>
+            <Column>Status</Column>
+            <Column></Column>
+        </Header>
+        {courseProgramList}
+    </Table>
 
     const Content = <ContentContainer>
         <div className={`${styles.courseProgram_container}`}>
             <h1>Course Program</h1>
-            <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
-                <Options active={isShowSortOption}>
-                    <OptionItem onOptionClick={optionSortClickHandler}>Name</OptionItem>
-                    <OptionItem onOptionClick={optionSortClickHandler}>Enrolled</OptionItem>
-                    <OptionItem onOptionClick={optionSortClickHandler}>Date</OptionItem>
-                </Options>
-            </SelectContainer>
-            <Table>
-                <Header>
-                    <Column>Name</Column>
-                    <Column>Description</Column>
-                    <Column>Students</Column>
-                    <Column>Date</Column>
-                    <Column>Status</Column>
-                    <Column></Column>
-                </Header>
-                {courseProgramList}
-            </Table>
+            <div className={`${styles.selector_container}`}>
+                {sortSelector}
+                {statusSelector}
+            </div>
+            {Tabel}
         </div>
     </ContentContainer>
 
