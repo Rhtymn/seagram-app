@@ -30,10 +30,6 @@ const InstructorPage = () => {
                         onClickSidebarItem={sideNavClickHandler}>
                             <i class="fa-solid fa-gauge-high"></i>
                     </SidebarItem>
-                    <SidebarItem label="Course" to="/instructor/course" active={activeSideNav === 'course' && true} 
-                        onClickSidebarItem={sideNavClickHandler}>
-                            <i class="fa-solid fa-book-open"></i>
-                    </SidebarItem>
                 </Sidebar>
                 <Outlet/>
             </div>

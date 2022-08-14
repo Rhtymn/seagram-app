@@ -8,7 +8,6 @@ import StudentCourse from './layout/StudentCourse/StudentCourse';
 import QuizPage from './pages/QuizPage/QuizPage';
 import InstructorPage from './pages/InstructorPage/InstructorPage';
 import InstructorDashboard from "./layout/InstructorDashboard/InstructorDashboard";
-import InstructorCourse from './layout/InstructorCourse/InstructorCourse';
 
 // TODO
 
@@ -24,7 +23,6 @@ function App() {
       <Route path='quiz' element={<QuizPage/>}/>
       <Route path='instructor' element={<InstructorPage/>}>
         <Route path="dashboard" element={<InstructorDashboard/>}></Route>
-        <Route path="course" element={<InstructorCourse/>}></Route>
       </Route>
     </Routes>
   </Router>
