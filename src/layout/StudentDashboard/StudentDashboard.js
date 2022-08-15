@@ -87,6 +87,8 @@ const StudentDashboard = () => {
     nextPageHandler,
     prevPageHandler,
     pageInformation,
+    currentPage,
+    maximumPage
   };
   
   const Content = <ContentContainer>

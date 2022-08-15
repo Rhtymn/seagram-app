@@ -80,6 +80,8 @@ const StudentCourse = () => {
     nextPageHandler,
     prevPageHandler,
     pageInformation,
+    currentPage,
+    maximumPage
   };
 
   const Content = <ContentContainer>

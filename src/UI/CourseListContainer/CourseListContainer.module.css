@@ -54,6 +54,11 @@
     cursor: pointer;
 }
 
+.disable {
+    color: rgba(198, 203, 207, 0.72);
+    cursor: unset;
+}
+
 @media (min-width:768px) {
     .enrolledCourse_container {
         width: 400px;

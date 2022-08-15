@@ -2,11 +2,14 @@ import React from 'react';
 import styles from './CourseListContainer.module.css';
 
 const Pagination = (props) => {
+  const prevClasses = props.currentPage === 1 ? `${styles.prev} ${styles.disable}` : `${styles.prev}`;
+  const nextClasses = props.currentPage === props.maxPage ? `${styles.next} ${styles.disable}` : `${styles.next}`;
+  
   return <div className={`${styles.pagination}`}>
-    <div className={`${styles.prev}`} onClick={props.onPrevPage}>
+    <div className={prevClasses} onClick={props.onPrevPage}>
       <i class="fa-solid fa-circle-chevron-left"></i>
     </div>
-    <div className={`${styles.next}`} onClick={props.onNextPage}>
+    <div className={nextClasses} onClick={props.onNextPage}>
       <i class="fa-solid fa-circle-chevron-right"></i>
     </div>
   </div>
@@ -23,7 +26,7 @@ const CourseListContainer = (props) => {
         <div className={`${styles.courseList_actions}`}>
           {props.children[2]}
           <div className={`${styles.page}`}>{props.pageInformation}</div>
-          <Pagination onNextPage={props.nextPageHandler} onPrevPage={props.prevPageHandler}/>
+          <Pagination onNextPage={props.nextPageHandler} onPrevPage={props.prevPageHandler} currentPage={props.currentPage} maxPage={props.maximumPage}/>
         </div>
     </div>
   )

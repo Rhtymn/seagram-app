@@ -6,7 +6,6 @@ import SelectContainer from '../../UI/SelectContainer/SelectContainer';
 import Options from '../../UI/Options/Options';
 import OptionItem from '../../UI/Options/OptionItem';
 import useSort from '../../hooks/useSort';
-import useStatus from "../../hooks/useStatus";
 import { courseProgramActions } from '../../store/courseProgram-slice';
 import { sortCourse } from '../../Helper';
 
@@ -40,14 +39,14 @@ const Column = (props) => {
 
 const Row = (props) => {
     const status = props.status;
-    const year = props.date.getFullYear();
-    const month = props.date.getMonth();
-    const day = props.date.getDate();
+    // const year = props.date.getFullYear();
+    // const month = props.date.getMonth();
+    // const day = props.date.getDate();
     return <li className={`${styles.body}`}>
         <Column>{props.courseName}</Column>
         <Column>Ini course mantap!</Column>
         <Column>{props.enrolledStudent}</Column>
-        <Column>{`${year}/${month}/${day}`}</Column>
+        <Column>{`dd/mm/yy`}</Column>
         <Column>
             <Status type={props.status}>{status}</Status>
         </Column>
@@ -58,11 +57,13 @@ const Row = (props) => {
 }
 
 const Pagination = (props) => {
+    const prevClasses = props.currentPage === 1 ? `${styles.prev} ${styles.disable}` : `${styles.prev}`;
+    const nextClasses = props.currentPage === props.maxPage ? `${styles.next} ${styles.disable}` : `${styles.next}`;
     return <div className={`${styles.pagination}`}>
-        <div className={`${styles.prev}`} onClick={props.onPrevPage}>
+        <div className={prevClasses} onClick={props.onPrevPage}>
             <i class="fa-solid fa-circle-chevron-left"></i>
         </div>
-        <div className={`${styles.next}`} onClick={props.onNextPage}>
+        <div className={nextClasses} onClick={props.onNextPage}>
             <i class="fa-solid fa-circle-chevron-right"></i>
         </div>
     </div>
@@ -74,7 +75,7 @@ const InstructorDashboard = () => {
     const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("courseProgram", courseProgramActions);
     const sortedCourseProgram = sortCourse(courseProgram, selectedSortBy);
     const totalCourse = courseProgram.length;
-    const courseProgramRow = sortedCourseProgram.map((course)=> <Row {...course}/>)
+    const courseProgramRow = sortedCourseProgram.map((course)=> <Row key={course.id} {...course}/>)
 
     // PAGINATION //
     const isShowRowOption = useSelector((state)=>state.courseProgram.isShowRowOption);
@@ -159,7 +160,7 @@ const InstructorDashboard = () => {
             <div className={`${styles.actions}`}>
                 {coursePerPageSelector}
                 <div className={`${styles.page}`}>{pageInformation}</div>
-                <Pagination onPrevPage={prevPageHandler} onNextPage={nextPageHandler}/>
+                <Pagination onPrevPage={prevPageHandler} onNextPage={nextPageHandler} currentPage={currentPage} maxPage={maximumPage}/>
             </div>
         </div>
     </ContentContainer>
