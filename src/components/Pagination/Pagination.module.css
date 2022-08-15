@@ -1,0 +1,13 @@
+.courseList_actions .pagination {
+    width: 70px;
+    font-size: 1.5rem;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prev, .next {
+    /* color: rgb(99, 115, 129); */
+    color: black;
+    cursor: pointer;
+}

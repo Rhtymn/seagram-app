@@ -11,7 +11,6 @@ import { uiStudentActions } from '../../store/ui-student-slice';
 import {sortCourse} from "../../Helper"
 
 import useSort from '../../hooks/useSort';
-import usePagination from '../../hooks/usePagination';
 
 import SelectContainer from '../../UI/SelectContainer/SelectContainer';
 import Options from '../../UI/Options/Options';
@@ -44,23 +43,44 @@ const EnrolledCourse = (props) => {
 }
 
 const StudentDashboard = () => {
+  const dispatch = useDispatch();
   const isShowCourseDetails = useSelector((state)=>state.uiStudent.isShowCourseDetails);
   const enrolledCourse = useSelector((state) => state.course.enrolledCourse);
   const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("enrolledCourse", enrolledCourseActions);
-  
-  const pagination = usePagination("enrolledCourse", enrolledCourseActions, enrolledCourse);
-  const sortedCourseProgram = sortCourse(enrolledCourse,selectedSortBy);
-  
-  const start = pagination.activePage*pagination.selectedRowNumber - pagination.selectedRowNumber;
-  const end = pagination.activePage*pagination.selectedRowNumber;
-  const enrolledCourseList = sortedCourseProgram.slice(start,end).map((course) => <EnrolledCourse key={course.id} {...course}/>)
+  const sortedEnrolledCourse = sortCourse(enrolledCourse, selectedSortBy);
+  const totalCourse = enrolledCourse.length;
+
+  // PAGINATION
+  const coursePerPage = useSelector((state)=>state.enrolledCourse.selectedRowNumber);
+  const isShowCPPOptions = useSelector((state)=>state.enrolledCourse.isShowCPPOptions);
+  const currentPage = useSelector((state)=>state.enrolledCourse.currentPage);
+  const clickedCPPSelectorHandler = () => {
+    dispatch(enrolledCourseActions.toggleRowOption());
+  }
+  const clickedCPPOptionHandler = (newCPP) => {
+    dispatch(enrolledCourseActions.setSelectedRowNumber(newCPP));
+  }
+  const maxIdx = currentPage * parseInt(coursePerPage);
+  const minIdx = maxIdx - parseInt(coursePerPage);
+  const maximumPage = totalCourse % parseInt(coursePerPage) === 0 
+    ? totalCourse / parseInt(coursePerPage)
+    : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
+  const nextPageHandler = () => {
+    if (currentPage === maximumPage) return;
+    dispatch(enrolledCourseActions.nextPage());
+  }
+  const prevPageHandler = () => {
+    if (currentPage === 1) return;
+    dispatch(enrolledCourseActions.prevPage());
+  }
+  const enrolledCourseList = sortedEnrolledCourse.slice(minIdx, maxIdx).map((course) => <EnrolledCourse key={course.id} {...course}/>)
 
   const ctx = {
-    nextPageHandler: pagination.nextPageHandler,
-    prevPageHandler: pagination.prevPageHandler,
-    start,
-    end,
-    totalCourse: pagination.totalCourse
+    nextPageHandler,
+    prevPageHandler,
+    minIdx,
+    maxIdx,
+    totalCourse,
   };
   
   const Content = <ContentContainer>
@@ -73,11 +93,11 @@ const StudentDashboard = () => {
         </Options>
       </SelectContainer>
       {enrolledCourseList}
-      <SelectContainer label={"Course per page:"} selected={pagination.selectedRowNumber} onSelectClick={pagination.selectRowClickHandler}>
-          <Options active={pagination.isShowRowOption}>
-            <OptionItem onOptionClick={pagination.optionRowClickHandler}>5</OptionItem>
-            <OptionItem onOptionClick={pagination.optionRowClickHandler}>10</OptionItem>
-            <OptionItem onOptionClick={pagination.optionRowClickHandler}>15</OptionItem>
+      <SelectContainer label={"Course per page:"} selected={coursePerPage} onSelectClick={clickedCPPSelectorHandler}>
+          <Options active={isShowCPPOptions}>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>5</OptionItem>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>10</OptionItem>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>15</OptionItem>
           </Options>
       </SelectContainer>
     </CourseListContainer>

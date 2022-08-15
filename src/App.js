@@ -10,6 +10,7 @@ import InstructorPage from './pages/InstructorPage/InstructorPage';
 import InstructorDashboard from "./layout/InstructorDashboard/InstructorDashboard";
 
 // TODO
+// 1. Add pagination on instructor dashboard
 
 function App() {
   return <Router>

@@ -14,6 +14,7 @@ const store = configureStore({
         enrolledCourse: enrolledCourseSlice.reducer,
         verifiedCourse: verifiedCourseSlice.reducer,
         courseProgram: courseProgramSlice.reducer,
-    }});
+    }
+});
 
 export default store;

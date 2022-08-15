@@ -15,7 +15,6 @@ import Options from '../../UI/Options/Options';
 import OptionItem from '../../UI/Options/OptionItem';
 
 import useSort from '../../hooks/useSort';
-import usePagination from '../../hooks/usePagination';
 
 const VerifiedCourse = (props) => {
   const dispatch = useDispatch();
@@ -36,27 +35,49 @@ const VerifiedCourse = (props) => {
 }
 
 const StudentCourse = () => {
+  const dispatch = useDispatch();
   const isShowCourseDetails = useSelector((state)=>state.uiStudent.isShowCourseDetails);
   const verifiedCourse = useSelector((state) => state.course.verifiedCourse);
   const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("verifiedCourse", verifiedCourseActions);
+  const sortedVerifiedCourse = sortCourse(verifiedCourse, selectedSortBy);
+  const totalCourse = verifiedCourse.length;
 
-  const pagination = usePagination("enrolledCourse", verifiedCourseActions, verifiedCourse);
-  const sortedCourseProgram = sortCourse(verifiedCourse,selectedSortBy);
+  // PAGINATION
+  const coursePerPage = useSelector((state)=>state.verifiedCourse.selectedRowNumber); // CPP = Course Per Page
+  const isShowCPPOptions = useSelector((state)=>state.verifiedCourse.isShowRowOption);
+  const currentPage = useSelector((state)=>state.verifiedCourse.currentPage);
+  const clickedCPPSelectorHandler = () => {
+    dispatch(verifiedCourseActions.toggleRowOption());
+  }
+  const clickedCPPOptionHandler = (newCPP) => {
+    dispatch(verifiedCourseActions.setSelectedRowNumber(newCPP));
+  }
+  const maxIdx = currentPage * parseInt(coursePerPage);
+  const minIdx = maxIdx - parseInt(coursePerPage);
+  const maximumPage = totalCourse % parseInt(coursePerPage) === 0 
+    ? totalCourse / parseInt(coursePerPage)
+    : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
+  const nextPageHandler = () => {
+    if (currentPage === maximumPage) return;
+    dispatch(verifiedCourseActions.nextPage());
+  }
+  const prevPageHandler = () => {
+    if (currentPage === 1) return;
+    dispatch(verifiedCourseActions.prevPage());
+  }
+  // END OF PAGINATION
   
-  const start = pagination.activePage*pagination.selectedRowNumber - pagination.selectedRowNumber;
-  const end = pagination.activePage*pagination.selectedRowNumber;
-  const verifiedCourseList = sortedCourseProgram.slice(start,end).map((course) => <VerifiedCourse key={course.id} {...course}/>)
-
+  const verifiedCourseList = sortedVerifiedCourse.slice(minIdx,maxIdx).map((course) => <VerifiedCourse key={course.id} {...course}/>)
   const ctx = {
-    nextPageHandler: pagination.nextPageHandler,
-    prevPageHandler: pagination.prevPageHandler,
-    start,
-    end,
-    totalCourse: pagination.totalCourse
+    nextPageHandler,
+    prevPageHandler,
+    minIdx,
+    maxIdx,
+    totalCourse
   };
 
   const Content = <ContentContainer>
-    <CourseListContainer listName="Verified Course" {...ctx} courseType="verified">
+    <CourseListContainer listName="Verified Course" {...ctx}  courseType="verified">
       <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
         <Options active={isShowSortOption}>
           <OptionItem onOptionClick={optionSortClickHandler}>Name</OptionItem>
@@ -64,11 +85,11 @@ const StudentCourse = () => {
         </Options>
       </SelectContainer>
       {verifiedCourseList}
-      <SelectContainer label={"Course per page:"} selected={pagination.selectedRowNumber} onSelectClick={pagination.selectRowClickHandler}>
-          <Options active={pagination.isShowRowOption}>
-            <OptionItem onOptionClick={pagination.optionRowClickHandler}>5</OptionItem>
-            <OptionItem onOptionClick={pagination.optionRowClickHandler}>10</OptionItem>
-            <OptionItem onOptionClick={pagination.optionRowClickHandler}>15</OptionItem>
+      <SelectContainer label={"Course per page:"} selected={coursePerPage} onSelectClick={clickedCPPSelectorHandler}>
+          <Options active={isShowCPPOptions}>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>5</OptionItem>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>10</OptionItem>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>15</OptionItem>
           </Options>
       </SelectContainer>
     </CourseListContainer>

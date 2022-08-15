@@ -8,6 +8,7 @@ const useStatus = (courseSlice, action) => {
         dispatch(action.toggleStatusOption());
     }
     const optionStatusClickHandler = (status) => {
+        dispatch(action.setActivePage(1));
         dispatch(action.setSelectedStatus(status));
     }
     return {selectedStatus, isShowStatusOption, selectStatusClickHandler, optionStatusClickHandler};

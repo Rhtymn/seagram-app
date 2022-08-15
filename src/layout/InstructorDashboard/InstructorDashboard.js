@@ -57,20 +57,52 @@ const Row = (props) => {
     </li>
 }
 
+const Pagination = (props) => {
+    return <div className={`${styles.pagination}`}>
+        <div className={`${styles.prev}`} onClick={props.onPrevPage}>
+            <i class="fa-solid fa-circle-chevron-left"></i>
+        </div>
+        <div className={`${styles.next}`} onClick={props.onNextPage}>
+            <i class="fa-solid fa-circle-chevron-right"></i>
+        </div>
+    </div>
+}
 
 const InstructorDashboard = () => {
+    const dispatch = useDispatch();
     const courseProgram = useSelector((state)=>state.course.courseProgram);
-    const status = useSelector((state)=>state.courseProgram.selectedStatus);
     const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("courseProgram", courseProgramActions);
-    const {selectedStatus, isShowStatusOption, selectStatusClickHandler, optionStatusClickHandler} = useStatus("courseProgram", courseProgramActions);
     const sortedCourseProgram = sortCourse(courseProgram, selectedSortBy);
+    const totalShowedCourse = courseProgram.length;
+    const courseProgramRow = sortedCourseProgram.map((course)=> <Row {...course}/>)
 
-    let courseProgramList;
-    if (status !== "All") {
-        courseProgramList = sortedCourseProgram.filter((course)=>course.status === status.toLowerCase()).map((course)=><Row {...course}/>);
-    } else {
-        courseProgramList = sortedCourseProgram.map((course)=><Row {...course}></Row>)
+    // PAGINATION //
+    const isShowRowOption = useSelector((state)=>state.courseProgram.isShowRowOption);
+    const currentPage = useSelector((state)=>state.courseProgram.currentPage);
+    const coursePerPage = useSelector((state)=>state.courseProgram.coursePerPage);
+    const onClickedRowSelector = () => {
+        dispatch(courseProgramActions.toggleRowOption());
     }
+    const onClickedRowOption = (newCoursePerPage) => {
+        dispatch(courseProgramActions.setCoursePerPage(newCoursePerPage));
+    }
+
+    const maxIdx = currentPage * parseInt(coursePerPage);
+    const minIdx = maxIdx - parseInt(coursePerPage);
+    const maximumPage = totalShowedCourse % parseInt(coursePerPage) === 0 
+        ? totalShowedCourse / parseInt(coursePerPage)
+        : Math.floor(totalShowedCourse) / parseInt(coursePerPage) + 1;
+
+    const nextPageHandler = () => {
+        if (currentPage === maximumPage) return;
+        dispatch(courseProgramActions.nextPage());
+    }
+
+    const prevPageHandler = () => {
+        if (currentPage === 1) return;
+        dispatch(courseProgramActions.prevPage());
+    }
+    // END OF PAGINATION //
 
     const sortSelector = <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
         <Options active={isShowSortOption}>
@@ -80,14 +112,14 @@ const InstructorDashboard = () => {
         </Options>
     </SelectContainer>
 
-    const statusSelector = <SelectContainer label="Status:" selected={selectedStatus} onSelectClick={selectStatusClickHandler}>
-        <Options active={isShowStatusOption}>
-            <OptionItem onOptionClick={optionStatusClickHandler}>All</OptionItem>
-            <OptionItem onOptionClick={optionStatusClickHandler}>Pending</OptionItem>
-            <OptionItem onOptionClick={optionStatusClickHandler}>Verified</OptionItem>
-            <OptionItem onOptionClick={optionStatusClickHandler}>Rejected</OptionItem>
-        </Options>
-    </SelectContainer>
+    // const statusSelector = <SelectContainer label="Status:" selected={statusFilter} onSelectClick={selectStatusClickHandler}>
+    //     <Options active={isShowStatusOption}>
+    //         <OptionItem onOptionClick={optionStatusClickHandler}>All</OptionItem>
+    //         <OptionItem onOptionClick={optionStatusClickHandler}>Pending</OptionItem>
+    //         <OptionItem onOptionClick={optionStatusClickHandler}>Verified</OptionItem>
+    //         <OptionItem onOptionClick={optionStatusClickHandler}>Rejected</OptionItem>
+    //     </Options>
+    // </SelectContainer>
 
     const Tabel = <Table>
         <Header>
@@ -98,17 +130,29 @@ const InstructorDashboard = () => {
             <Column>Status</Column>
             <Column></Column>
         </Header>
-        {courseProgramList}
+        {courseProgramRow.slice(minIdx,maxIdx)}
     </Table>
+
+    const coursePerPageSelector = <SelectContainer label={"Course per page:"} selected={coursePerPage} onSelectClick={onClickedRowSelector}>
+        <Options active={isShowRowOption}>
+            <OptionItem onOptionClick={onClickedRowOption}>5</OptionItem>
+            <OptionItem onOptionClick={onClickedRowOption}>10</OptionItem>
+            <OptionItem onOptionClick={onClickedRowOption}>15</OptionItem>
+        </Options>
+    </SelectContainer>
 
     const Content = <ContentContainer>
         <div className={`${styles.courseProgram_container}`}>
             <h1>Course Program</h1>
             <div className={`${styles.selector_container}`}>
                 {sortSelector}
-                {statusSelector}
             </div>
             {Tabel}
+            <div className={`${styles.actions}`}>
+                {coursePerPageSelector}
+                <span>{`${minIdx+1}-${maxIdx} of ${courseProgram.length}`}</span>
+                <Pagination onPrevPage={prevPageHandler} onNextPage={nextPageHandler}/>
+            </div>
         </div>
     </ContentContainer>
 
