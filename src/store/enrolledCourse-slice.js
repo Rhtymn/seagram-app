@@ -22,6 +22,9 @@ const enrolledCourseSlice = createSlice({
         setSelectedSortBy(state,actions){
             state.selectedSortBy = actions.payload;
         },
+        resetCurrentPage(state) {
+            state.currentPage = 1;
+        },
         nextPage(state){
             state.currentPage = state.currentPage + 1;
         },

@@ -30,6 +30,9 @@ const courseProgramSlice = createSlice({
         setSelectedStatus(state,actions) {
             state.selectedStatus = actions.payload;
         },
+        resetCurrentPage(state) {
+            state.currentPage = 1;
+        },
         nextPage(state){
             state.currentPage = state.currentPage + 1;
         },

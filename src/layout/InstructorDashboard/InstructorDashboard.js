@@ -73,7 +73,7 @@ const InstructorDashboard = () => {
     const courseProgram = useSelector((state)=>state.course.courseProgram);
     const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("courseProgram", courseProgramActions);
     const sortedCourseProgram = sortCourse(courseProgram, selectedSortBy);
-    const totalShowedCourse = courseProgram.length;
+    const totalCourse = courseProgram.length;
     const courseProgramRow = sortedCourseProgram.map((course)=> <Row {...course}/>)
 
     // PAGINATION //
@@ -84,14 +84,15 @@ const InstructorDashboard = () => {
         dispatch(courseProgramActions.toggleRowOption());
     }
     const onClickedRowOption = (newCoursePerPage) => {
+        dispatch(courseProgramActions.resetCurrentPage());
         dispatch(courseProgramActions.setCoursePerPage(newCoursePerPage));
     }
 
     const maxIdx = currentPage * parseInt(coursePerPage);
     const minIdx = maxIdx - parseInt(coursePerPage);
-    const maximumPage = totalShowedCourse % parseInt(coursePerPage) === 0 
-        ? totalShowedCourse / parseInt(coursePerPage)
-        : Math.floor(totalShowedCourse) / parseInt(coursePerPage) + 1;
+    const maximumPage = totalCourse % parseInt(coursePerPage) === 0 
+        ? totalCourse / parseInt(coursePerPage)
+        : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
 
     const nextPageHandler = () => {
         if (currentPage === maximumPage) return;
@@ -141,7 +142,13 @@ const InstructorDashboard = () => {
         </Options>
     </SelectContainer>
 
-    const pageInformation = `${minIdx+1}-${coursePerPage > totalShowedCourse ? totalShowedCourse : coursePerPage} of ${courseProgram.length}`
+    let pageInformation;
+    if (coursePerPage > totalCourse) {
+        pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${courseProgram.length}`
+    } else {
+        pageInformation = `${minIdx+1}-${maxIdx} of ${courseProgram.length}`
+    }
+
     const Content = <ContentContainer>
         <div className={`${styles.courseProgram_container}`}>
             <h1>Course Program</h1>

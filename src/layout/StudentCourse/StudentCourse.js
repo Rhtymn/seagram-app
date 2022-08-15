@@ -50,6 +50,7 @@ const StudentCourse = () => {
     dispatch(verifiedCourseActions.toggleRowOption());
   }
   const clickedCPPOptionHandler = (newCPP) => {
+    dispatch(verifiedCourseActions.resetCurrentPage());
     dispatch(verifiedCourseActions.setSelectedRowNumber(newCPP));
   }
   const maxIdx = currentPage * parseInt(coursePerPage);

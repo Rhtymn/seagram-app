@@ -58,6 +58,7 @@ const StudentDashboard = () => {
     dispatch(enrolledCourseActions.toggleRowOption());
   }
   const clickedCPPOptionHandler = (newCPP) => {
+    dispatch(enrolledCourseActions.resetCurrentPage());
     dispatch(enrolledCourseActions.setSelectedRowNumber(newCPP));
   }
   const maxIdx = currentPage * parseInt(coursePerPage);
