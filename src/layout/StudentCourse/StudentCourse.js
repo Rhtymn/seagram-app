@@ -66,14 +66,13 @@ const StudentCourse = () => {
     dispatch(verifiedCourseActions.prevPage());
   }
   // END OF PAGINATION
+  const pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${totalCourse}`
   
   const verifiedCourseList = sortedVerifiedCourse.slice(minIdx,maxIdx).map((course) => <VerifiedCourse key={course.id} {...course}/>)
   const ctx = {
     nextPageHandler,
     prevPageHandler,
-    minIdx,
-    maxIdx,
-    totalCourse
+    pageInformation,
   };
 
   const Content = <ContentContainer>

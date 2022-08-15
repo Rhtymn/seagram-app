@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './InstructorDashboard.module.css';
 import ContentContainer from '../../UI/ContentContainer/ContentContainer';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
@@ -141,6 +141,7 @@ const InstructorDashboard = () => {
         </Options>
     </SelectContainer>
 
+    const pageInformation = `${minIdx+1}-${coursePerPage > totalShowedCourse ? totalShowedCourse : coursePerPage} of ${courseProgram.length}`
     const Content = <ContentContainer>
         <div className={`${styles.courseProgram_container}`}>
             <h1>Course Program</h1>
@@ -150,7 +151,7 @@ const InstructorDashboard = () => {
             {Tabel}
             <div className={`${styles.actions}`}>
                 {coursePerPageSelector}
-                <span>{`${minIdx+1}-${maxIdx} of ${courseProgram.length}`}</span>
+                <div className={`${styles.page}`}>{pageInformation}</div>
                 <Pagination onPrevPage={prevPageHandler} onNextPage={nextPageHandler}/>
             </div>
         </div>

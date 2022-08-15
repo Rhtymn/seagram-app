@@ -52,7 +52,7 @@ const StudentDashboard = () => {
 
   // PAGINATION
   const coursePerPage = useSelector((state)=>state.enrolledCourse.selectedRowNumber);
-  const isShowCPPOptions = useSelector((state)=>state.enrolledCourse.isShowCPPOptions);
+  const isShowCPPOptions = useSelector((state)=>state.enrolledCourse.isShowRowOption);
   const currentPage = useSelector((state)=>state.enrolledCourse.currentPage);
   const clickedCPPSelectorHandler = () => {
     dispatch(enrolledCourseActions.toggleRowOption());
@@ -74,13 +74,12 @@ const StudentDashboard = () => {
     dispatch(enrolledCourseActions.prevPage());
   }
   const enrolledCourseList = sortedEnrolledCourse.slice(minIdx, maxIdx).map((course) => <EnrolledCourse key={course.id} {...course}/>)
+  const pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${totalCourse}`
 
   const ctx = {
     nextPageHandler,
     prevPageHandler,
-    minIdx,
-    maxIdx,
-    totalCourse,
+    pageInformation,
   };
   
   const Content = <ContentContainer>

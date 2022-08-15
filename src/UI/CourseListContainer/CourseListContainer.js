@@ -22,7 +22,7 @@ const CourseListContainer = (props) => {
         </ul>
         <div className={`${styles.courseList_actions}`}>
           {props.children[2]}
-          <div className={`${styles.page}`}>{`${props.minIdx+1}-${props.maxIdx} of ${props.totalCourse}`}</div>
+          <div className={`${styles.page}`}>{props.pageInformation}</div>
           <Pagination onNextPage={props.nextPageHandler} onPrevPage={props.prevPageHandler}/>
         </div>
     </div>
