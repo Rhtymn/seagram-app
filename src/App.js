@@ -10,7 +10,8 @@ import InstructorPage from './pages/InstructorPage/InstructorPage';
 import InstructorDashboard from "./layout/InstructorDashboard/InstructorDashboard";
 
 // TODO
-// 1. Add pagination on instructor dashboard
+// 1. Add course program details (CRUD)
+// 2. Add course program form
 
 function App() {
   return <Router>

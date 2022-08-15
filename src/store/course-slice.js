@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const description = `Lorem ipsum dolor sit amet, consectetur adipiscing elitsed`;
+
 const ENROLLED_COURSE = [
     {id:1, type:"enrolled", courseName:"Machine Learning", instructor:"Alan Turing", progress:"25%"},
     {id:2, type:"enrolled", courseName:"Artificial Intelligence", instructor:"Robert", progress:"35%"},
@@ -40,16 +42,16 @@ const VERIFIED_COURSE = [
 // ]
 
 const COURSE_PROGRAM = [
-    {id:1, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:10, status:"pending"},
-    {id:2, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:5, status:"rejected"},
-    {id:3, courseName:"Mathematics", instructor:"George", enrolledStudent:15, status:"verified"},
-    {id:4, courseName:"Physics", instructor:"Thomas", enrolledStudent:14, status:"verified"},
-    {id:5, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:21, status:"rejected"},
-    {id:6, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:29, status:"pending"},
-    {id:7, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:13, status:"verified"},
-    {id:8, courseName:"Mathematics", instructor:"George", enrolledStudent:16, status:"rejected"},
-    {id:9, courseName:"Physics", instructor:"Thomas", enrolledStudent:5, status:"pending"},
-    {id:10, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:4, status:"pending"}
+    {id:1, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:10, status:"pending", description},
+    {id:2, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:5, status:"rejected", description},
+    {id:3, courseName:"Mathematics", instructor:"George", enrolledStudent:15, status:"verified", description},
+    {id:4, courseName:"Physics", instructor:"Thomas", enrolledStudent:14, status:"verified", description},
+    {id:5, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:21, status:"rejected", description},
+    {id:6, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:29, status:"pending", description},
+    {id:7, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:13, status:"verified", description},
+    {id:8, courseName:"Mathematics", instructor:"George", enrolledStudent:16, status:"rejected", description},
+    {id:9, courseName:"Physics", instructor:"Thomas", enrolledStudent:5, status:"pending", description},
+    {id:10, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:4, status:"pending", description}
 ]
 
 const courseSlice = createSlice({

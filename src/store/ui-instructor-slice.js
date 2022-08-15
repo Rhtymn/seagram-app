@@ -5,10 +5,9 @@ const uiInstructorSlice = createSlice({
     initialState: {
         activeSideNav: "dashboard",
         isShowSidebar:false, 
-        // activeCourseDetails: {},
-        // isShowCourseDetails: false, 
-        // isShowQuiz: false,
-        // isShowQuizNavigation: false,
+        isShowCourseDetails: false,
+        isShowCourseForm: false, 
+        activeCourseDetails: {},
     },
     reducers: {
         toggleSidebar(state){
@@ -17,16 +16,16 @@ const uiInstructorSlice = createSlice({
         toggleActiveSideNav(state, actions){
             state.activeSideNav = actions.payload;
         },
-        // toggleCourseDetails(state){
-        //     state.isShowCourseDetails = !state.isShowCourseDetails;
-        // },
-        // toggleQuizNavigation(state){
-        //     state.isShowQuizNavigation = !state.isShowQuizNavigation;
-        // },
-        // setActiveCourseDetails(state,actions){
-        //     state.activeCourseDetails = actions.payload;
-        //     console.log(state.activeCourseDetails);
-        // },
+        toggleCourseDetails(state){
+            state.isShowCourseDetails = !state.isShowCourseDetails;
+        },
+        toggleCourseForm(state){
+            state.isShowCourseForm = !state.isShowCourseForm;
+        },
+        setActiveCourseDetails(state,actions){
+            state.activeCourseDetails = actions.payload;
+            console.log(state.activeCourseDetails);
+        },
     }
 })
 

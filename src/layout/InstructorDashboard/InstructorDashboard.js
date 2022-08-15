@@ -8,6 +8,9 @@ import OptionItem from '../../UI/Options/OptionItem';
 import useSort from '../../hooks/useSort';
 import { courseProgramActions } from '../../store/courseProgram-slice';
 import { sortCourse } from '../../Helper';
+import CourseDetailsContainer from '../../UI/CourseDetailsContainer/CourseDetailsContainer';
+import { uiInstructorActions } from '../../store/ui-instructor-slice';
+import CourseProgramDetails from '../../components/CourseProgramDetails/CourseProgramDetails';
 
 const Table = (props) => {
     return <ul className={`${styles.courseProgram_table}`}>
@@ -38,13 +41,29 @@ const Column = (props) => {
 }
 
 const Row = (props) => {
+    const dispatch = useDispatch();
     const status = props.status;
     // const year = props.date.getFullYear();
     // const month = props.date.getMonth();
     // const day = props.date.getDate();
-    return <li className={`${styles.body}`}>
+    const courseDetails = {
+        id: props.id,
+        description: props.description,
+        courseName: props.courseName,
+        instructor: props.instructor,
+        enrolledStudent: props.enrolledStudent,
+        status: props.status,
+    }
+
+    const onRowClicked = () => {
+        dispatch(uiInstructorActions.setActiveCourseDetails(courseDetails));
+        dispatch(uiInstructorActions.toggleCourseDetails());
+    }
+
+    return (
+    <li className={`${styles.body}`} onClick={onRowClicked}>
         <Column>{props.courseName}</Column>
-        <Column>Ini course mantap!</Column>
+        <Column>{props.description}</Column>
         <Column>{props.enrolledStudent}</Column>
         <Column>{`dd/mm/yy`}</Column>
         <Column>
@@ -53,7 +72,7 @@ const Row = (props) => {
         <Column>
                 <i class="fa-solid fa-ellipsis-vertical"></i>
         </Column>
-    </li>
+    </li>)
 }
 
 const Pagination = (props) => {
@@ -75,7 +94,6 @@ const InstructorDashboard = () => {
     const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("courseProgram", courseProgramActions);
     const sortedCourseProgram = sortCourse(courseProgram, selectedSortBy);
     let totalCourse = courseProgram.length;
-    // const courseProgramRow = sortedCourseProgram.map((course)=> <Row key={course.id} {...course}/>)
     
     // STATUS FILTERED
     const [isShowStatusOption, setisShowStatusOption] = useState(false);
@@ -127,6 +145,7 @@ const InstructorDashboard = () => {
         dispatch(courseProgramActions.prevPage());
     }
     // END OF PAGINATION //
+
     const sortSelector = <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
         <Options active={isShowSortOption}>
             <OptionItem onOptionClick={optionSortClickHandler}>Name</OptionItem>
@@ -170,9 +189,28 @@ const InstructorDashboard = () => {
     } else {
         pageInformation = `${minIdx+1}-${maxIdx} of ${totalCourse}`
     }
+    
+    // COURSE FORM
+    const isShowCourseForm = useSelector((state)=>state.uiInstructor.isShowCourseForm);
+    const toggleCourseForm = () => {
+        dispatch(uiInstructorActions.toggleCourseForm());
+    }
+    const CourseForm = <CourseDetailsContainer toggle={toggleCourseForm}>
+        <CourseProgramDetails type="form"/>
+    </CourseDetailsContainer>
+
+    // COURSE DETAILS
+    const isShowCourseDetails = useSelector((state)=>state.uiInstructor.isShowCourseDetails);
+    const toggleCourseDetails = () => {
+        dispatch(uiInstructorActions.toggleCourseDetails());
+    }
+    const CourseDetails = <CourseDetailsContainer toggle={toggleCourseDetails}>
+        <CourseProgramDetails type="modify"/>
+    </CourseDetailsContainer>
 
     const Content = <ContentContainer>
         <div className={`${styles.courseProgram_container}`}>
+            <button className={`${styles.add_btn}`} onClick={toggleCourseForm}>+ New Course</button>
             <h1>Course Program</h1>
             <div className={`${styles.selector_container}`}>
                 {sortSelector}
@@ -189,7 +227,9 @@ const InstructorDashboard = () => {
 
     return (
         <>
-            {Content}
+            {isShowCourseForm && !isShowCourseDetails && CourseForm}
+            {!isShowCourseForm && !isShowCourseDetails && Content}
+            {isShowCourseDetails && !isShowCourseForm && CourseDetails}
         </>
     )
 }

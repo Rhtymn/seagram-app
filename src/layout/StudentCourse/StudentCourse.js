@@ -103,7 +103,11 @@ const StudentCourse = () => {
     </CourseListContainer>
   </ContentContainer>
 
-  const CourseDetails = <CourseDetailsContainer>
+  
+  const toggleCourseDetails = () => {
+    dispatch(uiStudentActions.toggleCourseDetails());
+  }
+  const CourseDetails = <CourseDetailsContainer toggle={toggleCourseDetails}>
     <VerifiedCourseDetails/>
   </CourseDetailsContainer>
   

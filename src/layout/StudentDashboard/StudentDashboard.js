@@ -111,7 +111,10 @@ const StudentDashboard = () => {
     </CourseListContainer>
   </ContentContainer>
 
-  const CourseDetails = <CourseDetailsContainer>
+  const toggleCourseDetails = () => {
+    dispatch(uiStudentActions.toggleCourseDetails());
+  }
+  const CourseDetails = <CourseDetailsContainer toggle={toggleCourseDetails}>
     <EnrolledCourseDetails/>
   </CourseDetailsContainer>
 
