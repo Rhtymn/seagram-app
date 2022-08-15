@@ -10,6 +10,7 @@ const courseProgramSlice = createSlice({
         isShowRowOption: false,
         isShowSortOption: false,
         isShowStatusOption: false,
+        isShowQuizForm: false,
     },
     reducers: {
         toggleRowOption(state){
@@ -20,6 +21,9 @@ const courseProgramSlice = createSlice({
         },
         toggleStatusOption(state){
             state.isShowStatusOption = !state.isShowStatusOption;
+        },
+        toggleQuizForm(state){
+            state.isShowQuizForm = !state.isShowQuizForm;
         },
         setCoursePerPage(state,actions){
             state.coursePerPage = actions.payload;

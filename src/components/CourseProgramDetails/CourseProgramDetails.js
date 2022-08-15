@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { useSelector } from 'react-redux';
 import styles from "./CourseProgramDetails.module.css";
 
@@ -83,6 +83,39 @@ const CourseModify = (props) => {
     )
 }
 
+const Question = (props) => {
+    const [showInfo, setShowInfo] = useState(false);
+    const questionInfoClasses = showInfo ? `${styles.question_information}` : `${styles.question_information} d-none`;
+    const toggleInfoHandler = () => {
+        setShowInfo((prev)=>{
+            return !prev;
+        })
+    }
+    const deleteQuestionHandler = () => {
+
+    }
+    return (
+        <div className={`${styles.question_container}`} onClick={toggleInfoHandler}>
+            <div className={`${styles.questionView}`}>
+                <span>Question</span>
+                <div onClick={deleteQuestionHandler}><i class="fa-solid fa-circle-xmark"></i></div>
+            </div>
+            <div className={questionInfoClasses}>
+                <div className={`${styles.question}`}>
+                    {props.question}
+                </div>
+                <ul className={`${styles.answer}`}>
+                    <li>A. {props.option[0]}</li>
+                    <li>B. {props.option[1]}</li>
+                    <li>C. {props.option[2]}</li>
+                    <li>D. {props.option[3]}</li>
+                    <li>E. {props.option[4]}</li>
+                </ul>
+            </div>
+        </div>
+    )
+}
+
 const CourseForm = (props) => {
     const [RcourseName, setRcourseName] = useState("");
     const [Rdescription, setRdescription] = useState("");
@@ -126,14 +159,12 @@ const CourseForm = (props) => {
         setLectureName("");
         setLectureURL("");
     }
-
     const deleteLectureHandler = (id) => {
         setLectureList((prev)=>{
             const newLectureList = [...prev].filter((lecture)=>lecture.id !== id);
             return newLectureList;
         })
     }
-
     const LectureForm = <div className={`${styles.lecture_form}`}>
         <select name='lecture-type' id="lecture-type" onChange={lectureInputTypeChangeHandler}>
             <option>URL</option>
@@ -151,6 +182,63 @@ const CourseForm = (props) => {
         <a href={lecture.url} target="_blank">{lecture.lectureName}</a>
         <div className={`${styles.delete_lecture}`} onClick={()=>deleteLectureHandler(lecture.id)}><i class="fa-solid fa-circle-xmark"></i></div>
     </div>)
+
+    // LECTURE QUIZ
+    const [showQuizForm, setQuizForm] = useState(false);
+    const question = useRef(null);
+    const optionA = useRef(null);
+    const optionB = useRef(null);
+    const optionC = useRef(null);
+    const optionD = useRef(null);
+    const optionE = useRef(null);
+    const [quizList, setQuizList] = useState([
+        [
+            {question:"1+1",option:{A:"2",B:"3",C:"4",D:"5"}},
+            {question:"2+1",option:{A:"2",B:"3",C:"4",D:"5"}}
+        ]
+    ]);
+    const [questionList, setQuestionList] = useState([
+        {id: 1, question:"Lorem lorem ipsum dashjdg sdadnjkasd ddsakjdas daskjdasn ?",option:["Lorem sad","Lorem sad","Lorem sad","Lorem sad","Lorem sad"]}
+    ]);
+    const toggleQuizFormHandler = (e) => {
+        e.preventDefault();
+        setQuizForm((prev)=>{
+            return !prev;
+        })
+    }
+    const addQuestionHandler = (en) => {
+        en.preventDefault()
+        const a = optionA.current.value;
+        const b = optionB.current.value;
+        const c = optionC.current.value;
+        const d = optionD.current.value;
+        const e = optionE.current.value;
+        const newQuestion = {
+            id:2,
+            question: question.current.value,
+            option:[a,b,c,d,e],
+        }
+        setQuestionList((prev)=>{
+            const newQuestionList = [...prev, newQuestion];
+            return newQuestionList;
+        })
+        question.current.value = optionA.current.value = optionB.current.value = optionC.current.value = optionD.current.value = optionE.current.value = "";
+    }
+    const QuizForm = <div className={`${styles.quiz_form}`}>
+        <div className={`${styles.question_input}`}>
+            <textarea type="text" placeholder='Question' required ref={question}></textarea>
+        </div>
+        <div className={`${styles.answer_input}`}>
+            <input type="text" placeholder='Option A' ref={optionA} required></input>
+            <input type="text" placeholder='Option B' ref={optionB} required></input>
+            <input type="text" placeholder='Option C' ref={optionC} required></input>
+            <input type="text" placeholder='Option D' ref={optionD} required></input>
+            <input type="text" placeholder='Option E' ref={optionE} required></input>
+        </div>
+        <button className={`${styles.add_question}`} onClick={addQuestionHandler}>Add</button>
+    </div>
+
+    const QuestionListView = questionList.map((question)=> <Question key={question.id} {...question}/>)
 
     return (
         <div className={`${styles.courseProgram_details}`}>
@@ -175,9 +263,11 @@ const CourseForm = (props) => {
                 <div className={`${styles.course_quiz}`}>
                     <div className={`${styles.course_quiz_actions}`}>
                         <h2>Quiz</h2>
-                        <button><i class="fa-solid fa-circle-plus"></i></button>
+                        <button onClick={toggleQuizFormHandler}><i class="fa-solid fa-circle-plus"></i></button>
                     </div>
                     <div className={`${styles.divider}`}></div>
+                    {QuestionListView}
+                    {showQuizForm && QuizForm}
                 </div>
             </form>
         </div>
