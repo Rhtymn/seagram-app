@@ -224,6 +224,13 @@ const CourseForm = (props) => {
         })
         question.current.value = optionA.current.value = optionB.current.value = optionC.current.value = optionD.current.value = optionE.current.value = "";
     }
+    const addQuizHandler = (e) => {
+        e.preventDefault();
+        const newQuizList = [...quizList];
+        newQuizList.push(questionList);
+        setQuizList(newQuizList);
+        setQuestionList([]);
+    }
     const QuizForm = <div className={`${styles.quiz_form}`}>
         <div className={`${styles.question_input}`}>
             <textarea type="text" placeholder='Question' required ref={question}></textarea>
@@ -235,11 +242,18 @@ const CourseForm = (props) => {
             <input type="text" placeholder='Option D' ref={optionD} required></input>
             <input type="text" placeholder='Option E' ref={optionE} required></input>
         </div>
-        <button className={`${styles.add_question}`} onClick={addQuestionHandler}>Add</button>
+        <button className={`${styles.add_question}`} onClick={addQuestionHandler}>Add Question</button>
     </div>
 
+    const QuizListView = quizList.map((quiz)=><div className={`${styles.quiz}`}>
+                <span>Quiz</span>
+            <div onClick={null}><i class="fa-solid fa-circle-xmark"></i></div>
+        </div>
+    
+    )
     const QuestionListView = questionList.map((question)=> <Question key={question.id} {...question}/>)
 
+    const addQuizBtnClasses = questionList.length > 0 ? `${styles.add_quiz}` : `${styles.add_quiz} d-none`
     return (
         <div className={`${styles.courseProgram_details}`}>
             <form>
@@ -263,9 +277,13 @@ const CourseForm = (props) => {
                 <div className={`${styles.course_quiz}`}>
                     <div className={`${styles.course_quiz_actions}`}>
                         <h2>Quiz</h2>
-                        <button onClick={toggleQuizFormHandler}><i class="fa-solid fa-circle-plus"></i></button>
+                        <div>
+                            <button onClick={toggleQuizFormHandler}><i class="fa-solid fa-circle-plus"></i></button>
+                            <button className={addQuizBtnClasses} onClick={addQuizHandler}>Submit Quiz</button>
+                        </div>
                     </div>
                     <div className={`${styles.divider}`}></div>
+                    {QuizListView}
                     {QuestionListView}
                     {showQuizForm && QuizForm}
                 </div>
