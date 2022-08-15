@@ -87,19 +87,38 @@ form button {
     background-color: rgb(32, 101, 209);
     color: #fff;
     line-height: 50px;
-    padding: 0 20px;
     border-radius: 5px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
 }
 
-.lecture:hover {
-    color: #fff;
+.lecture a {
+    text-decoration: none;
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+}
+
+.lecture a:hover {
+    color: white;
 }
 
 .add_lecture {
     background-color: aliceblue;
     padding: 3px 20px;
     border-radius: 5px;
+}
+
+.delete_lecture {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 200;
+    cursor: pointer;
 }
 
 .divider {

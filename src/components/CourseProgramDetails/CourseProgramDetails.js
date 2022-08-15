@@ -2,6 +2,19 @@ import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import styles from "./CourseProgramDetails.module.css";
 
+const Lecture = (props) => {
+    console.log(props);
+    const deleteLectureHandler = () => {
+        props.deleteLecture(props.id);
+    }    
+    return (
+        <div className={`${styles.lecture}`}>
+            <a href={props.url}>{props.lectureName}</a>
+            <div className={`${styles.delete_lecture}`} onClick={deleteLectureHandler}><i class="fa-solid fa-circle-xmark"></i></div>
+        </div>
+    )
+}
+
 const CourseModify = (props) => {
     const courseInfo = useSelector((state)=>state.uiInstructor.activeCourseDetails);
     const [McourseName, setMcourseName] = useState(courseInfo.courseName);
@@ -83,6 +96,8 @@ const CourseForm = (props) => {
     // LECTURE FORM
     const [lectureList, setLectureList] = useState([
         {id: 1, lectureName: "Chapter 1: Machine Learning", url: "https://youtu.be/7eh4d6sabA0"},
+        {id: 2, lectureName: "Chapter 2: Machine Learning", url: "https://youtu.be/7eh4d6sabA0"},
+        {id: 3, lectureName: "Chapter 3: Machine Learning", url: "https://youtu.be/7eh4d6sabA0"},
     ]);
     const [showLectureForm, setShowLectureForm] = useState(false);
     const [lectureInputType, setLectureInputType] = useState("URL");
@@ -112,6 +127,13 @@ const CourseForm = (props) => {
         setLectureURL("");
     }
 
+    const deleteLectureHandler = (id) => {
+        setLectureList((prev)=>{
+            const newLectureList = [...prev].filter((lecture)=>lecture.id !== id);
+            return newLectureList;
+        })
+    }
+
     const LectureForm = <div className={`${styles.lecture_form}`}>
         <select name='lecture-type' id="lecture-type" onChange={lectureInputTypeChangeHandler}>
             <option>URL</option>
@@ -124,6 +146,11 @@ const CourseForm = (props) => {
             <button className={`${styles.add_lecture}`} onClick={addLectureHandler}>Add</button>
         </div>
     </div>
+    
+    const lectureListView = lectureList.map((lecture) => <div key={lecture.id} className={`${styles.lecture}`}>
+        <a href={lecture.url} target="_blank">{lecture.lectureName}</a>
+        <div className={`${styles.delete_lecture}`} onClick={()=>deleteLectureHandler(lecture.id)}><i class="fa-solid fa-circle-xmark"></i></div>
+    </div>)
 
     return (
         <div className={`${styles.courseProgram_details}`}>
@@ -143,7 +170,7 @@ const CourseForm = (props) => {
                     </div>
                     <div className={`${styles.divider}`}></div>
                     {showLectureForm && LectureForm}
-                    {lectureList.map((lecture)=><a className={`${styles.lecture}`} key={lecture.id} href={lecture.url}>{lecture.lectureName}</a>)}
+                    {lectureListView}
                 </div>
                 <div className={`${styles.course_quiz}`}>
                     <div className={`${styles.course_quiz_actions}`}>
