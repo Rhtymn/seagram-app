@@ -67,7 +67,7 @@ const StudentDashboard = () => {
     ? totalCourse / parseInt(coursePerPage)
     : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
   const nextPageHandler = () => {
-    if (currentPage === maximumPage) return;
+    if (currentPage + 1 > maximumPage) return;
     dispatch(enrolledCourseActions.nextPage());
   }
   const prevPageHandler = () => {
@@ -75,7 +75,13 @@ const StudentDashboard = () => {
     dispatch(enrolledCourseActions.prevPage());
   }
   const enrolledCourseList = sortedEnrolledCourse.slice(minIdx, maxIdx).map((course) => <EnrolledCourse key={course.id} {...course}/>)
-  const pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${totalCourse}`
+
+  let pageInformation;
+  if (coursePerPage > totalCourse) {
+    pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${totalCourse}`
+  } else {
+    pageInformation = `${minIdx+1}-${maxIdx} of ${totalCourse}`
+  }
 
   const ctx = {
     nextPageHandler,

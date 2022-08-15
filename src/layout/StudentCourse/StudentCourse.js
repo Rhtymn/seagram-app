@@ -59,7 +59,8 @@ const StudentCourse = () => {
     ? totalCourse / parseInt(coursePerPage)
     : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
   const nextPageHandler = () => {
-    if (currentPage === maximumPage) return;
+    console.log(currentPage, maximumPage);
+    if (currentPage + 1 > maximumPage) return;
     dispatch(verifiedCourseActions.nextPage());
   }
   const prevPageHandler = () => {
@@ -67,7 +68,12 @@ const StudentCourse = () => {
     dispatch(verifiedCourseActions.prevPage());
   }
   // END OF PAGINATION
-  const pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${totalCourse}`
+  let pageInformation;
+  if (coursePerPage > totalCourse) {
+    pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${totalCourse}`
+  } else {
+    pageInformation = `${minIdx+1}-${maxIdx} of ${totalCourse}`
+  }
   
   const verifiedCourseList = sortedVerifiedCourse.slice(minIdx,maxIdx).map((course) => <VerifiedCourse key={course.id} {...course}/>)
   const ctx = {

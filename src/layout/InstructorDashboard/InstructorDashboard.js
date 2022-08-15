@@ -95,7 +95,7 @@ const InstructorDashboard = () => {
         : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
 
     const nextPageHandler = () => {
-        if (currentPage === maximumPage) return;
+        if (currentPage + 1 > maximumPage) return;
         dispatch(courseProgramActions.nextPage());
     }
 
