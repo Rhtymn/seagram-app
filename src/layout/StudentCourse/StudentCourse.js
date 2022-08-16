@@ -9,11 +9,9 @@ import VerifiedCourseDetails from '../../components/VerifiedCourseDetails/Verifi
 import { verifiedCourseActions } from '../../store/verifiedCourse-slice';
 import {sortCourse} from "../../Helper"
 import { uiStudentActions } from '../../store/ui-student-slice';
-
 import SelectContainer from '../../UI/SelectContainer/SelectContainer';
 import Options from '../../UI/Options/Options';
 import OptionItem from '../../UI/Options/OptionItem';
-
 import useSort from '../../hooks/useSort';
 
 const VerifiedCourse = (props) => {
