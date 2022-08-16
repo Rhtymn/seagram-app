@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const description = `Lorem ipsum dolor sit amet, consectetur adipiscing elitsed`;
+
 const ENROLLED_COURSE = [
     {id:1, type:"enrolled", courseName:"Machine Learning", instructor:"Alan Turing", progress:"25%"},
     {id:2, type:"enrolled", courseName:"Artificial Intelligence", instructor:"Robert", progress:"35%"},
@@ -26,10 +28,39 @@ const VERIFIED_COURSE = [
     {id:10, type:"verified", courseName:"Data Structure", instructor:"Lamela"}
 ]
 
+// const COURSE_PROGRAM = [
+//     {id:1, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:10, status:"pending", date: new Date("2022-08-14")},
+//     {id:2, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:5, status:"rejected", date: new Date("2022-07-14")},
+//     {id:3, courseName:"Mathematics", instructor:"George", enrolledStudent:15, status:"verified", date: new Date("2022-08-15")},
+//     {id:4, courseName:"Physics", instructor:"Thomas", enrolledStudent:14, status:"verified", date: new Date("2022-08-10")},
+//     {id:5, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:21, status:"rejected", date: new Date("2022-07-10")},
+//     {id:6, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:29, status:"pending", date: new Date("2022-06-10")},
+//     {id:7, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:13, status:"verified", date: new Date("2022-05-27")},
+//     {id:8, courseName:"Mathematics", instructor:"George", enrolledStudent:16, status:"rejected", date: new Date("2022-08-13")},
+//     {id:9, courseName:"Physics", instructor:"Thomas", enrolledStudent:5, status:"pending", date: new Date("2022-07-21")},
+//     {id:10, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:4, status:"pending", date: new Date("2022-05-13")}
+// ]
+
+const COURSE_PROGRAM = [
+    {id:1, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:10, status:"pending", description},
+    {id:2, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:5, status:"rejected", description},
+    {id:3, courseName:"Mathematics", instructor:"George", enrolledStudent:15, status:"verified", description},
+    {id:4, courseName:"Physics", instructor:"Thomas", enrolledStudent:14, status:"verified", description},
+    {id:5, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:21, status:"rejected", description},
+    {id:6, courseName:"Machine Learning", instructor:"Alan Turing", enrolledStudent:29, status:"pending", description},
+    {id:7, courseName:"Artificial Intelligence", instructor:"Robert", enrolledStudent:13, status:"verified", description},
+    {id:8, courseName:"Mathematics", instructor:"George", enrolledStudent:16, status:"rejected", description},
+    {id:9, courseName:"Physics", instructor:"Thomas", enrolledStudent:5, status:"pending", description},
+    {id:10, courseName:"Data Structure", instructor:"Lamela", enrolledStudent:4, status:"pending", description}
+]
 
 const courseSlice = createSlice({
     name: 'course',
-    initialState: {enrolledCourse: ENROLLED_COURSE, verifiedCourse: VERIFIED_COURSE},
+    initialState: {
+        enrolledCourse: ENROLLED_COURSE,
+        verifiedCourse: VERIFIED_COURSE,
+        courseProgram: COURSE_PROGRAM,
+    },
     reducers: {
     }
 })

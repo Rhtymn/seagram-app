@@ -1,0 +1,166 @@
+:root{
+    --font_colour:rgb(33, 43, 54);
+}
+
+.courseProgram_container {
+    position: relative;
+    font-family: "Public Sans", sans-serif;
+    color: var(--font_colour);
+    margin: auto;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgb(145 158 171 / 20%) 0px 3px 1px -2px, rgb(145 158 171 / 14%) 0px 2px 2px 0px, rgb(145 158 171 / 12%) 0px 1px 5px 0px;
+}
+
+.courseProgram_container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.courseProgram_table {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    overflow: scroll;
+}
+
+.courseProgram_table .header {
+}
+
+.courseProgram_table .body {
+    cursor: pointer;
+    box-shadow: 0px -1px 0px 0px rgba(17, 17, 26, 0.18);
+}
+
+.courseProgram_table .body:hover {
+    background-color: rgb(249, 250, 251);
+}
+
+.courseProgram_table li {
+    color: rgb(33, 43, 54);
+    display: grid;
+    width: 200%;
+    grid-template-columns: 200px calc(100% - 200px - 100px - 120px - 100px - 30px) 100px 120px 100px 30px;
+}
+
+.courseProgram_table li .column {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 1rem 1rem;
+    /* border: 1px solid black; */
+}
+
+.courseProgram_table li .column:nth-child(6){
+    cursor: pointer;
+    padding-right: 1rem;
+    display: flex;
+    justify-content: end;
+}
+
+.status_pending, .status_verified, .status_rejected{
+    font-size: 0.75rem;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+
+.status_pending {
+    background-color:rgb(241, 232, 149);
+    color: rgb(190, 154, 53);
+}
+
+.status_verified {
+    background-color:rgba(84, 214, 44, 0.16);
+    color: rgb(34, 154, 22);
+}
+
+.status_rejected {
+    background-color:rgb(235, 130, 130);
+    color: rgb(133, 14, 14);
+}
+
+.selector_container {
+    max-width: 100%;
+    display: flex;
+    /* justify-content: space-between; */
+    column-gap: 2rem;
+}
+
+.page{
+    padding: 8px 0;
+}
+
+.actions{
+    display: flex;
+    position: relative;
+    margin-top: 1rem;
+    justify-content: end;
+    column-gap: 1rem;
+}
+
+.pagination {
+    width: 70px;
+    font-size: 1.5rem;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prev, .next {
+    /* color: rgb(99, 115, 129); */
+    color: black;
+    cursor: pointer;
+}
+
+.disable{
+    color: rgba(198, 203, 207, 0.72);
+    cursor: unset;
+}
+
+.add_btn {
+    position: absolute;
+    right: 20px;
+    border: none;
+    color: white;
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    background-color: rgb(32, 101, 209);
+    border-radius: 8px;
+    transition: all ease-in-out 100ms;
+}
+
+.add_btn:hover {
+    transform: scale(1.05);
+}
+
+@media (min-width:768px) {
+    .courseProgram_container {
+        width: 500px;
+    }
+    .courseProgram_table li {
+        width: 180%;
+    }
+}
+
+@media (min-width:976px) {
+    .courseProgram_container {
+        width: 940px;
+    }
+    .courseProgram_table {
+        overflow: unset;
+    }
+    .courseProgram_table li {
+        width: 100%;
+    }
+}
+
+@media (min-width:1400px) {
+    .courseProgram_container {
+        width: 1130px;
+    }
+}

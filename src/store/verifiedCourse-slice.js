@@ -3,11 +3,11 @@ import {createSlice} from '@reduxjs/toolkit'
 const verifiedCourseSlice = createSlice({
     name: 'verifiedCourse',
     initialState: {
+        currentPage: 1,
         selectedRowNumber: "5",
         selectedSortBy: "Name",
         isShowRowOption: false,
         isShowSortOption: false,
-        activePage:1,
     },
     reducers: {
         toggleRowOption(state){
@@ -22,11 +22,18 @@ const verifiedCourseSlice = createSlice({
         setSelectedSortBy(state,actions){
             state.selectedSortBy = actions.payload;
         },
-        setActivePage(state,actions){
-            state.activePage = actions.payload;
+        resetCurrentPage(state) {
+            state.currentPage = 1;
+        },
+        nextPage(state) {
+            state.currentPage = state.currentPage + 1;
+        },
+        prevPage(state) {
+            state.currentPage = state.currentPage - 1;
         }
     }
-})
+}
+)
 
 export const verifiedCourseActions = verifiedCourseSlice.actions;
 export default verifiedCourseSlice;

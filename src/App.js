@@ -7,8 +7,11 @@ import StudentDashboard from './layout/StudentDashboard/StudentDashboard';
 import StudentCourse from './layout/StudentCourse/StudentCourse';
 import QuizPage from './pages/QuizPage/QuizPage';
 import InstructorPage from './pages/InstructorPage/InstructorPage';
+import InstructorDashboard from "./layout/InstructorDashboard/InstructorDashboard";
 
 // TODO
+// 1. Add course program details (CRUD)
+// 2. Add course program form
 
 function App() {
   return <Router>
@@ -20,7 +23,9 @@ function App() {
         <Route path="course" element={<StudentCourse/>}></Route>
       </Route>
       <Route path='quiz' element={<QuizPage/>}/>
-      <Route path='instructor' element={<InstructorPage/>}></Route>
+      <Route path='instructor' element={<InstructorPage/>}>
+        <Route path="dashboard" element={<InstructorDashboard/>}></Route>
+      </Route>
     </Routes>
   </Router>
 }

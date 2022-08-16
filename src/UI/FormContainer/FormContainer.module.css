@@ -4,10 +4,8 @@
     top: 50%;
     transform: translate(-50%,-50%);
     padding: 20px;
-    min-height: 450px;
-    min-width: 350px;
-    max-width: 420px;
-    border-radius: 20px;
+    width: 100%;
+    min-height: 100vh;
     box-shadow: -1px 2px 8px 0px rgba(0,0,0,0.5);
     -webkit-box-shadow: -1px 2px 8px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: -1px 2px 8px 0px rgba(0,0,0,0.5);
@@ -20,6 +18,11 @@
 
 .form_container p {
     text-align: center;
+}
+
+.form_container form {
+    margin: auto;
+    max-width: 500px;
 }
 
 .form_container a {
@@ -37,5 +40,17 @@
     .form_container {
         padding: 40px;
         min-width: 420px;
+    }
+}
+
+@media (min-width:976px) {
+    .form_container form {
+        width: 100%;
+    }
+    .form_container {
+        min-width: 350px;
+        max-width: 420px; 
+        border-radius: 20px;
+        min-height: 450px;
     }
 }

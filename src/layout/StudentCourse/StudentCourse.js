@@ -8,9 +8,27 @@ import CourseDetailsContainer from '../../UI/CourseDetailsContainer/CourseDetail
 import VerifiedCourseDetails from '../../components/VerifiedCourseDetails/VerifiedCourseDetails';
 import { verifiedCourseActions } from '../../store/verifiedCourse-slice';
 import {sortCourse} from "../../Helper"
+import { uiStudentActions } from '../../store/ui-student-slice';
+import SelectContainer from '../../UI/SelectContainer/SelectContainer';
+import Options from '../../UI/Options/Options';
+import OptionItem from '../../UI/Options/OptionItem';
+import useSort from '../../hooks/useSort';
 
 const VerifiedCourse = (props) => {
-  return <CourseContainer {...props}>
+  const dispatch = useDispatch();
+  const courseClickHandler = () => {
+    const courseDetails = {
+      id: props.id,
+      type: props.type,
+      courseName: props.courseName,
+      instructor: props.instructor,
+      progress: props.progress,
+    }
+    dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
+    dispatch(uiStudentActions.toggleCourseDetails());
+  }
+
+  return <CourseContainer {...props} courseType="verified" onClickCourse={courseClickHandler}>
   </CourseContainer>;
 }
 
@@ -18,54 +36,76 @@ const StudentCourse = () => {
   const dispatch = useDispatch();
   const isShowCourseDetails = useSelector((state)=>state.uiStudent.isShowCourseDetails);
   const verifiedCourse = useSelector((state) => state.course.verifiedCourse);
-  
-  const selectedRowNumber = useSelector((state)=>state.verifiedCourse.selectedRowNumber);
-  const selectedSortBy = useSelector((state)=>state.verifiedCourse.selectedSortBy);
-  const isShowRowOption = useSelector((state)=>state.verifiedCourse.isShowRowOption);
-  const isShowSortOption = useSelector((state)=>state.verifiedCourse.isShowSortOption);
-  const activePage = useSelector((state)=>state.verifiedCourse.activePage);
+  const {selectedSortBy, isShowSortOption, selectSortClickHandler, optionSortClickHandler} = useSort("verifiedCourse", verifiedCourseActions);
+  const sortedVerifiedCourse = sortCourse(verifiedCourse, selectedSortBy);
   const totalCourse = verifiedCourse.length;
-  const maxPage = Math.ceil(totalCourse / parseInt(selectedRowNumber)); 
 
-  const selectSortClickHandler = () => {
-    dispatch(verifiedCourseActions.toggleSortOption());
-  }
-  const optionSortClickHandler = (sortBy) => {
-    dispatch(verifiedCourseActions.setSelectedSortBy(sortBy));
-  }
-  const selectRowClickHandler = () => {
+  // PAGINATION
+  const coursePerPage = useSelector((state)=>state.verifiedCourse.selectedRowNumber); // CPP = Course Per Page
+  const isShowCPPOptions = useSelector((state)=>state.verifiedCourse.isShowRowOption);
+  const currentPage = useSelector((state)=>state.verifiedCourse.currentPage);
+  const clickedCPPSelectorHandler = () => {
     dispatch(verifiedCourseActions.toggleRowOption());
   }
-  const optionRowClickHandler = (rowNumber) => {
-    dispatch(verifiedCourseActions.setSelectedRowNumber(rowNumber));
+  const clickedCPPOptionHandler = (newCPP) => {
+    dispatch(verifiedCourseActions.resetCurrentPage());
+    dispatch(verifiedCourseActions.setSelectedRowNumber(newCPP));
   }
+  const maxIdx = currentPage * parseInt(coursePerPage);
+  const minIdx = maxIdx - parseInt(coursePerPage);
+  const maximumPage = totalCourse % parseInt(coursePerPage) === 0 
+    ? totalCourse / parseInt(coursePerPage)
+    : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
   const nextPageHandler = () => {
-    if (activePage + 1 > maxPage) return;
-    dispatch(verifiedCourseActions.setActivePage(activePage + 1));
-  } 
+    console.log(currentPage, maximumPage);
+    if (currentPage + 1 > maximumPage) return;
+    dispatch(verifiedCourseActions.nextPage());
+  }
   const prevPageHandler = () => {
-    if (activePage - 1 === 0) return;
-    dispatch(verifiedCourseActions.setActivePage(activePage - 1));
+    if (currentPage === 1) return;
+    dispatch(verifiedCourseActions.prevPage());
   }
-
-  const sortedVerifiedCourse = sortCourse(verifiedCourse, selectedSortBy);
-  const start = activePage*selectedRowNumber - selectedRowNumber;
-  const end = activePage*selectedRowNumber;
-  const verifiedCourseList = sortedVerifiedCourse.slice(start,end).map((course) => <VerifiedCourse key={course.id} {...course}/>)
-
+  // END OF PAGINATION
+  let pageInformation;
+  if (coursePerPage > totalCourse) {
+    pageInformation = `${minIdx+1}-${coursePerPage > totalCourse ? totalCourse : coursePerPage} of ${totalCourse}`
+  } else {
+    pageInformation = `${minIdx+1}-${maxIdx} of ${totalCourse}`
+  }
+  
+  const verifiedCourseList = sortedVerifiedCourse.slice(minIdx,maxIdx).map((course) => <VerifiedCourse key={course.id} {...course}/>)
   const ctx = {
-    selectedRowNumber,selectedSortBy,isShowRowOption,isShowSortOption,maxPage,activePage,start,end,totalCourse,
-    selectSortClickHandler,optionSortClickHandler,selectRowClickHandler,optionRowClickHandler,
-    nextPageHandler, prevPageHandler
-  }
+    nextPageHandler,
+    prevPageHandler,
+    pageInformation,
+    currentPage,
+    maximumPage
+  };
 
   const Content = <ContentContainer>
-    <CourseListContainer listName="Verified Course" {...ctx}>
+    <CourseListContainer listName="Verified Course" {...ctx}  courseType="verified">
+      <SelectContainer label="Sort by:" selected={selectedSortBy} onSelectClick={selectSortClickHandler}>
+        <Options active={isShowSortOption}>
+          <OptionItem onOptionClick={optionSortClickHandler}>Name</OptionItem>
+          <OptionItem onOptionClick={optionSortClickHandler}>Instructor</OptionItem>
+        </Options>
+      </SelectContainer>
       {verifiedCourseList}
+      <SelectContainer label={"Course per page:"} selected={coursePerPage} onSelectClick={clickedCPPSelectorHandler}>
+          <Options active={isShowCPPOptions}>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>5</OptionItem>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>10</OptionItem>
+            <OptionItem onOptionClick={clickedCPPOptionHandler}>15</OptionItem>
+          </Options>
+      </SelectContainer>
     </CourseListContainer>
   </ContentContainer>
 
-  const CourseDetails = <CourseDetailsContainer>
+  
+  const toggleCourseDetails = () => {
+    dispatch(uiStudentActions.toggleCourseDetails());
+  }
+  const CourseDetails = <CourseDetailsContainer toggle={toggleCourseDetails}>
     <VerifiedCourseDetails/>
   </CourseDetailsContainer>
   

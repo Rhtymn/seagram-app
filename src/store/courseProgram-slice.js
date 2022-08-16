@@ -1,13 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const enrolledCourseSlice = createSlice({
-    name: 'enrolledCourse',
+const courseProgramSlice = createSlice({
+    name: 'courseProgram',
     initialState: {
         currentPage: 1,
-        selectedRowNumber: "5",
+        coursePerPage: "5",
         selectedSortBy: "Name",
+        selectedStatus: "All",
         isShowRowOption: false,
         isShowSortOption: false,
+        isShowStatusOption: false,
+        isShowQuizForm: false,
     },
     reducers: {
         toggleRowOption(state){
@@ -16,11 +19,20 @@ const enrolledCourseSlice = createSlice({
         toggleSortOption(state){
             state.isShowSortOption = !state.isShowSortOption;
         },
-        setSelectedRowNumber(state,actions){
-            state.selectedRowNumber = actions.payload;
+        toggleStatusOption(state){
+            state.isShowStatusOption = !state.isShowStatusOption;
+        },
+        toggleQuizForm(state){
+            state.isShowQuizForm = !state.isShowQuizForm;
+        },
+        setCoursePerPage(state,actions){
+            state.coursePerPage = actions.payload;
         },
         setSelectedSortBy(state,actions){
             state.selectedSortBy = actions.payload;
+        },
+        setSelectedStatus(state,actions) {
+            state.selectedStatus = actions.payload;
         },
         resetCurrentPage(state) {
             state.currentPage = 1;
@@ -30,9 +42,9 @@ const enrolledCourseSlice = createSlice({
         },
         prevPage(state){
             state.currentPage = state.currentPage - 1;
-        }
+        },
     }
 })
 
-export const enrolledCourseActions = enrolledCourseSlice.actions;
-export default enrolledCourseSlice;
+export const courseProgramActions = courseProgramSlice.actions;
+export default courseProgramSlice;

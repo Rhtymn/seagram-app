@@ -3,11 +3,12 @@ import styles from './Options.module.css';
 
 
 const OptionItem = (props) => {
-  const onOptionClick = () => {
+  const onOptionItemClick = () => {
     props.onOptionClick(props.children);
   }
+
   return (
-    <div className={`${styles.option}`} onClick={onOptionClick}>{props.children}</div>
+    <div className={`${styles.option}`} onClick={onOptionItemClick}>{props.children}</div>
   )
 }
 
