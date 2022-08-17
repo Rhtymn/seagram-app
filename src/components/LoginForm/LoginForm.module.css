@@ -1,0 +1,21 @@
+.signInBtn {
+  width: 100%;
+  border-radius: 10px;
+  padding: 8px 0;
+  border: none;
+  background-color: rgb(32, 101, 209);
+  color: #fff;
+  font-weight: bold;
+  transition: all ease-in 100ms;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.signInBtn span {
+  color: #fff;
+}
+
+.signInBtn:hover {
+  transform: scale(1.02);
+}
