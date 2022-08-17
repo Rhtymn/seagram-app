@@ -1,0 +1,41 @@
+.verifiedPage {
+  position: relative;
+  max-width: 100vw;
+}
+
+.content {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  text-align: center;
+}
+
+.content h1 {
+  color: #2065d1;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.content img {
+  width: 100%;
+}
+
+.content a {
+  cursor: pointer;
+  color: #2065d1;
+}
+
+.content a:hover {
+  color: #2065d1;
+  font-weight: bold;
+}
+
+@media (min-width: 976px) {
+  .content img {
+    width: 800px;
+  }
+}
