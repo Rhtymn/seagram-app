@@ -23,12 +23,6 @@ const FormContainer = (props) => {
   }
   return (
     <div className={styles.form_container}>
-      {/* <div
-        className={`${styles.notification} alert alert-danger ${isVisibleNotification} text-center`}
-        role="alert"
-      >
-        {props.notification.message}
-      </div> */}
       {Notification}
       {props.children}
     </div>

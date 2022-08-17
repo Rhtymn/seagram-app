@@ -1,27 +1,27 @@
 .inputContainer {
-    margin-bottom: 1rem;
-    position: relative;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
 .label {
-    font-size: 1rem;
-    position: absolute;
-    color: black;
-    left: 15px;
-    top: 8px;
-    transition: all 100ms;
+  font-size: 1rem;
+  position: absolute;
+  color: rgb(184, 181, 181);
+  left: 15px;
+  top: 8px;
+  transition: all 100ms;
 }
 
 .onInputFocus {
-    color: rgb(32, 101, 209);
-    top: -11px;
-    background-color: white;
-    padding: 0 5px;
-    font-size: 0.9rem;
+  color: rgb(32, 101, 209);
+  top: -11px;
+  background-color: white;
+  padding: 0 5px;
+  font-size: 0.9rem;
 }
 
 .input {
-    border-radius: 10px;
-    border: 1px solid black;
-    padding: 8px 15px;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 8px 15px;
 }
