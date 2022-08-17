@@ -49,9 +49,6 @@ const EnrolledCourse = (props) => {
 };
 
 const StudentDashboard = () => {
-  console.log("HELlo");
-  const user = useSelector((state) => state.user.information);
-  console.log(user);
   const dispatch = useDispatch();
   const isShowCourseDetails = useSelector(
     (state) => state.uiStudent.isShowCourseDetails

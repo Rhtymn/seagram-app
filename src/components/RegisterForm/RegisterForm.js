@@ -60,7 +60,7 @@ const RegisterForm = () => {
         body: JSON.stringify(body),
       };
       const response = await fetch(
-        "http://seagram-api.herokuapp.com/api/accounts",
+        "https://seagram-api.herokuapp.com/api/accounts",
         reqOptions
       );
       if (!response.ok) throw new Error("Something went wrong.");

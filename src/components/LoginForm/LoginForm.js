@@ -37,14 +37,14 @@ const LoginForm = () => {
         }),
       };
       const response = await fetch(
-        "http://seagram-api.herokuapp.com/api/accounts/login",
+        "https://seagram-api.herokuapp.com/api/accounts/login",
         reqOptions
       );
       if (!response.ok) throw new Error("email-verify-error");
       const baseUserdata = await response.json();
 
       const userDataResponse = await fetch(
-        `http://seagram-api.herokuapp.com/api/accounts/${baseUserdata.userId}?access_token=${baseUserdata.id}`
+        `https://seagram-api.herokuapp.com/api/accounts/${baseUserdata.userId}?access_token=${baseUserdata.id}`
       );
       const userData = await userDataResponse.json();
 
