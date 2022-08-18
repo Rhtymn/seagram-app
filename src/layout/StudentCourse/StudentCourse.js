@@ -94,7 +94,6 @@ const StudentCourse = () => {
       ? totalCourse / parseInt(coursePerPage)
       : Math.floor(totalCourse) / parseInt(coursePerPage) + 1;
   const nextPageHandler = () => {
-    console.log(currentPage, maximumPage);
     if (currentPage + 1 > maximumPage) return;
     dispatch(verifiedCourseActions.nextPage());
   };
@@ -103,12 +102,10 @@ const StudentCourse = () => {
     dispatch(verifiedCourseActions.prevPage());
   };
   let pageInformation;
-  if (coursePerPage > totalCourse) {
-    pageInformation = `${minIdx + 1}-${
-      coursePerPage > totalCourse ? totalCourse : coursePerPage
-    } of ${totalCourse}`;
-  } else {
+  if (currentPage < Math.floor(maximumPage)) {
     pageInformation = `${minIdx + 1}-${maxIdx} of ${totalCourse}`;
+  } else {
+    pageInformation = `${minIdx + 1}-${totalCourse} of ${totalCourse}`;
   }
 
   const verifiedCourseList = sortedVerifiedCourse
