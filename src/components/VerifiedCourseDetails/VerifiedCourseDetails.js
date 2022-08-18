@@ -40,7 +40,7 @@ const VerifiedCourseDetails = (props) => {
       </p> */}
         </div>
       </div>
-      <Button>Enroll</Button>
+      {!props.isLoading && props.state.back && <Button>Enroll</Button>}
     </div>
   );
 
