@@ -19,10 +19,10 @@ const VerifiedCourse = (props) => {
   const courseClickHandler = () => {
     const courseDetails = {
       id: props.id,
-      type: props.type,
-      courseName: props.courseName,
-      instructor: props.instructor,
-      progress: props.progress,
+      type: "verified",
+      title: props.title,
+      instructor: "Robert",
+      description: props.description,
     };
     dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
     dispatch(uiStudentActions.toggleCourseDetails());
@@ -32,6 +32,7 @@ const VerifiedCourse = (props) => {
     <CourseContainer
       {...props}
       courseType="verified"
+      instructor="Robert"
       onClickCourse={courseClickHandler}
     ></CourseContainer>
   );
