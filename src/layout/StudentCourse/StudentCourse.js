@@ -40,11 +40,12 @@ const VerifiedCourse = (props) => {
 
 const StudentCourse = () => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
   const isShowCourseDetails = useSelector(
     (state) => state.uiStudent.isShowCourseDetails
   );
   const verifiedCourse = useSelector((state) => state.verifiedCourse.data);
+  const temp = verifiedCourse.length === 0 ? true : false;
+  const [isLoading, setIsLoading] = useState(temp);
 
   // FETCH VERIFIED COURSE
   useEffect(() => {
