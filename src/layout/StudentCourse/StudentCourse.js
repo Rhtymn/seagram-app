@@ -13,19 +13,20 @@ import SelectContainer from "../../UI/SelectContainer/SelectContainer";
 import Options from "../../UI/Options/Options";
 import OptionItem from "../../UI/Options/OptionItem";
 import useSort from "../../hooks/useSort";
+import { useNavigate } from "react-router-dom";
 
 const VerifiedCourse = (props) => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const courseClickHandler = () => {
-    const courseDetails = {
-      id: props.id,
-      type: "verified",
-      title: props.title,
-      instructor: "Robert",
-      description: props.description,
-    };
-    dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
-    dispatch(uiStudentActions.toggleCourseDetails());
+    navigate(`/student/course/${props.id}`, {
+      state: {
+        type: "verified",
+        id: `${props.id}`,
+        title: `${props.title}`,
+        description: `${props.description}`,
+        instructor: "Robert",
+      },
+    });
   };
 
   return (
