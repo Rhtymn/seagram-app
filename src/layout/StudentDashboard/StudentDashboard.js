@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./StudentDashboard.module.css";
 import ContentContainer from "../../UI/ContentContainer/ContentContainer";
 import CourseListContainer from "../../UI/CourseListContainer/CourseListContainer";
@@ -13,6 +13,7 @@ import useSort from "../../hooks/useSort";
 import SelectContainer from "../../UI/SelectContainer/SelectContainer";
 import Options from "../../UI/Options/Options";
 import OptionItem from "../../UI/Options/OptionItem";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ProgressBar = (props) => {
   return (
@@ -24,17 +25,19 @@ const ProgressBar = (props) => {
 };
 
 const EnrolledCourse = (props) => {
-  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const courseClickHandler = () => {
-    const courseDetails = {
-      id: props.id,
-      type: props.type,
-      courseName: props.courseName,
-      instructor: props.instructor,
-      progress: props.progress,
-    };
-    dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
-    dispatch(uiStudentActions.toggleCourseDetails());
+    navigate(`/student/dashboard/enrolledcourse/${props.id}`, {
+      state: {
+        type: "enrolled",
+        id: `${props.id}`,
+        title: `${props.title}`,
+        description: `${props.description}`,
+        back: `${location.pathname}`,
+        instructor: "Robert",
+      },
+    });
   };
 
   return (
@@ -53,7 +56,27 @@ const StudentDashboard = () => {
   const isShowCourseDetails = useSelector(
     (state) => state.uiStudent.isShowCourseDetails
   );
-  const enrolledCourse = useSelector((state) => state.course.enrolledCourse);
+  const enrolledCourse = useSelector((state) => state.enrolledCourse.data);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Nanti logicnya diubah ambil course yang udah di-enroll student
+    // Sekarang ambil verified course aja
+    const getEnrolledCourse = async () => {
+      try {
+        const response = await fetch(
+          "http://seagram-api.herokuapp.com/api/Courses/getAllVerified"
+        );
+        if (!response.ok) throw new Error("Something went wrong");
+        const { courses } = await response.json();
+        dispatch(enrolledCourseActions.setData([...courses]));
+        setIsLoading(false);
+      } catch (error) {}
+    };
+    getEnrolledCourse();
+  }, []);
+
+  // SORTING
   const {
     selectedSortBy,
     isShowSortOption,
@@ -111,6 +134,7 @@ const StudentDashboard = () => {
     pageInformation,
     currentPage,
     maximumPage,
+    isLoading,
   };
 
   const Content = (

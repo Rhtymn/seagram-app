@@ -30,6 +30,10 @@ function App() {
         </Route>
         <Route path="verified" element={<VerifiedPage />} />
         <Route path="student/course/:courseId" element={<CourseDetails />} />
+        <Route
+          path="student/dashboard/enrolledcourse/:courseId"
+          element={<CourseDetails />}
+        />
         <Route path="*" element={<LoginPage />} />
       </Routes>
     </Router>
