@@ -40,6 +40,7 @@ const VerifiedCourse = (props) => {
 
 const StudentCourse = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const isShowCourseDetails = useSelector(
     (state) => state.uiStudent.isShowCourseDetails
   );
@@ -55,6 +56,7 @@ const StudentCourse = () => {
         if (!response.ok) throw new Error("Something went wrong");
         const { courses } = await response.json();
         dispatch(verifiedCourseActions.setData([...courses]));
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -117,6 +119,7 @@ const StudentCourse = () => {
     pageInformation,
     currentPage,
     maximumPage,
+    isLoading,
   };
 
   const Content = (

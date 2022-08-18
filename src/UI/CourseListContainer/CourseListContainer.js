@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./CourseListContainer.module.css";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Pagination = (props) => {
   const prevClasses =
@@ -28,6 +29,7 @@ const CourseListContainer = (props) => {
     <div className={`${styles.enrolledCourse_container}`}>
       <h1>{props.listName}</h1>
       {props.children[0]}
+      <Spinner isVisible={props.isLoading} />
       <ul>{props.children[1]}</ul>
       <div className={`${styles.courseList_actions}`}>
         {props.children[2]}
