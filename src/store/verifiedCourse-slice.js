@@ -13,7 +13,6 @@ const verifiedCourseSlice = createSlice({
   reducers: {
     setData(state, actions) {
       state.data = actions.payload;
-      console.log(state.data);
     },
     toggleRowOption(state) {
       state.isShowRowOption = !state.isShowRowOption;

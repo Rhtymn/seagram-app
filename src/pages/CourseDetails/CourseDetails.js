@@ -3,14 +3,13 @@ import styles from "./CourseDetails.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import VerifiedCourseDetails from "../../components/VerifiedCourseDetails/VerifiedCourseDetails";
 
-const CourseDetails = (props) => {
+const CourseDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const backHandler = () => {
-    navigate("/student/course");
+    navigate(`${location.state.back}`);
   };
 
-  console.log(location.state);
   if (location.state.type === "verified") {
     return (
       <div className={`${styles.course_details_container}`}>

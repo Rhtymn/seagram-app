@@ -13,9 +13,10 @@ import SelectContainer from "../../UI/SelectContainer/SelectContainer";
 import Options from "../../UI/Options/Options";
 import OptionItem from "../../UI/Options/OptionItem";
 import useSort from "../../hooks/useSort";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const VerifiedCourse = (props) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const courseClickHandler = () => {
     navigate(`/student/course/${props.id}`, {
@@ -24,6 +25,7 @@ const VerifiedCourse = (props) => {
         id: `${props.id}`,
         title: `${props.title}`,
         description: `${props.description}`,
+        back: `${location.pathname}`,
         instructor: "Robert",
       },
     });
