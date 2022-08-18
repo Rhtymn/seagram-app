@@ -32,6 +32,22 @@ const enrolledCourseSlice = createSlice({
         });
       }
     },
+    addedLectureDetails(state, actions) {
+      if (state.lectureDetails.length === 0) {
+        state.lectureDetails = [{ ...actions.payload }];
+      } else {
+        const isExist = state.lectureDetails.findIndex((el) => {
+          return el.lectureId === actions.payload.lectureId;
+        });
+        if (isExist === -1) {
+          const newLectureDetails = [
+            ...state.lectureDetails,
+            { ...actions.payload },
+          ];
+          state.lectureDetails = newLectureDetails;
+        }
+      }
+    },
     toggleRowOption(state) {
       state.isShowRowOption = !state.isShowRowOption;
     },

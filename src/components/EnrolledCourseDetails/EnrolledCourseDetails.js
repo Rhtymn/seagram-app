@@ -1,9 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./EnrolledCourseDetails.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { enrolledCourseActions } from "../../store/enrolledCourse-slice";
 
 const Lecture = (props) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const params = useParams();
+  const lectureDetails = useSelector(
+    (state) => state.enrolledCourse.lectureDetails
+  );
+  const [relatedDetails] = lectureDetails.filter(
+    (lecture) => lecture.lectureId === props.id
+  );
+
+  const getLectureDetails = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `https://seagram-api.herokuapp.com/api/Courses/${params.courseId}/lectures/${props.id}/lectureDetails`
+      );
+      if (!response.ok) throw new Error("Something went wrong");
+      const detailsData = await response.json();
+      dispatch(enrolledCourseActions.addedLectureDetails(detailsData));
+      setIsLoading(false);
+    } catch (error) {}
+  });
+
+  useEffect(() => {
+    getLectureDetails();
+  }, [getLectureDetails]);
+
   const [isShowDetails, setIsShowDetails] = useState(false);
   const LectureDetailsClasses = isShowDetails
     ? `${styles.lecture_information}`
@@ -13,6 +40,21 @@ const Lecture = (props) => {
     setIsShowDetails((prev) => {
       return !prev;
     });
+  };
+
+  const learnClickHandler = async (e) => {
+    e.preventDefault();
+    const getMaterials = async () => {
+      try {
+        const response = await fetch(
+          `http://seagram-api.herokuapp.com/api/LectureDetails/${relatedDetails.id}/materials`
+        );
+        if (!response.ok) throw new Error("Something went wrong");
+        const materialsData = await response.json();
+        window.open(`${materialsData.url}`);
+      } catch (error) {}
+    };
+    getMaterials();
   };
 
   return (
@@ -26,13 +68,10 @@ const Lecture = (props) => {
       <div className={LectureDetailsClasses}>
         <div className={`${styles.lecture__description}`}>
           <div className="mb-1">Description</div>
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh
-          </div>
+          <div>{isLoading ? "Please wait..." : relatedDetails.description}</div>
         </div>
         <div className={`${styles.lecture__link}`}>
-          <a href="#">Learn</a>
+          <a onClick={learnClickHandler}>Learn</a>
         </div>
       </div>
     </li>
