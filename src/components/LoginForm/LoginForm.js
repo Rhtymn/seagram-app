@@ -51,7 +51,7 @@ const LoginForm = () => {
       if (userData.role === "instructor" && !userData.instructorIsVerified)
         throw new Error("admin-verify-error");
 
-      dispatch(userActions.setUser({ ...userData }));
+      dispatch(userActions.setUser({ ...userData, token: baseUserdata.id }));
       navigate(`/${userData.role}/dashboard`);
       setIsLoading(false);
     } catch (error) {

@@ -57,20 +57,68 @@ const StudentDashboard = () => {
     (state) => state.uiStudent.isShowCourseDetails
   );
   const enrolledCourse = useSelector((state) => state.enrolledCourse.data);
-  const [isLoading, setIsLoading] = useState(true);
+  const user = useSelector((state) => state.user.information);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Nanti logicnya diubah ambil course yang udah di-enroll student
     // Sekarang ambil verified course aja
     const getEnrolledCourse = async () => {
       try {
-        const response = await fetch(
-          "http://seagram-api.herokuapp.com/api/Courses/getAllVerified"
-        );
-        if (!response.ok) throw new Error("Something went wrong");
-        const { courses } = await response.json();
-        dispatch(enrolledCourseActions.setData([...courses]));
-        setIsLoading(false);
+        fetch(
+          `http://seagram-api.herokuapp.com/api/accounts/enrolledCourses?access_token=${user.token}`
+        )
+          .then((response) => {
+            if (response.ok) return response.json();
+            else return Promise.reject(response);
+          })
+          .then((data) => {
+            const { enrolledCourses } = data;
+            const urls = enrolledCourses.map((course) => {
+              return `http://seagram-api.herokuapp.com/api/Courses/${course.courseId}`;
+            });
+            const requests = urls.map((url) =>
+              fetch(url).then((response) => response.json())
+            );
+
+            Promise.all(requests)
+              .then((datas) => {
+                const result = [];
+                datas.forEach((data) => {
+                  result.push(data);
+                });
+                return result;
+              })
+              .then(async (data) => {
+                const courseData = [...data];
+                const urls = data.map((course) => {
+                  return `http://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
+                });
+                const requests = urls.map((url) =>
+                  fetch(url).then((response) => response.json())
+                );
+
+                const instructors = await Promise.all(requests).then(
+                  (datas) => {
+                    const result = [];
+                    datas.forEach((data) => {
+                      result.push(data);
+                    });
+                    return result;
+                  }
+                );
+
+                const fixedCourseData = courseData.map((course, idx) => {
+                  const newCourseData = {
+                    ...course,
+                    instructor: instructors[idx].name,
+                  };
+                  return newCourseData;
+                });
+
+                dispatch(enrolledCourseActions.setData([...fixedCourseData]));
+              });
+          });
       } catch (error) {}
     };
     getEnrolledCourse();

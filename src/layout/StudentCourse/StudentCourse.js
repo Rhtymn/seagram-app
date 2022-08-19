@@ -26,7 +26,7 @@ const VerifiedCourse = (props) => {
         title: `${props.title}`,
         description: `${props.description}`,
         back: `${location.pathname}`,
-        instructor: "Robert",
+        instructor: `${props.instructor}`,
       },
     });
   };
@@ -35,7 +35,6 @@ const VerifiedCourse = (props) => {
     <CourseContainer
       {...props}
       courseType="verified"
-      instructor="Robert"
       onClickCourse={courseClickHandler}
     ></CourseContainer>
   );
@@ -58,7 +57,32 @@ const StudentCourse = () => {
         );
         if (!response.ok) throw new Error("Something went wrong");
         const { courses } = await response.json();
-        dispatch(verifiedCourseActions.setData([...courses]));
+
+        console.log(courses);
+        const urls = courses.map((course) => {
+          return `http://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
+        });
+        const requests = urls.map((url) =>
+          fetch(url).then((response) => response.json())
+        );
+
+        const instructors = await Promise.all(requests).then((datas) => {
+          const result = [];
+          datas.forEach((data) => {
+            result.push(data);
+          });
+          return result;
+        });
+
+        const fixedCourseData = courses.map((course, idx) => {
+          const newCourseData = {
+            ...course,
+            instructor: instructors[idx].name,
+          };
+          return newCourseData;
+        });
+
+        dispatch(verifiedCourseActions.setData([...fixedCourseData]));
         setIsLoading(false);
       } catch (error) {
         console.log(error);
