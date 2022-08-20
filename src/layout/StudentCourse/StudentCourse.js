@@ -53,13 +53,13 @@ const StudentCourse = () => {
     const getVerifiedCourse = async () => {
       try {
         const response = await fetch(
-          "http://seagram-api.herokuapp.com/api/Courses/getAllVerified"
+          "https://seagram-api.herokuapp.com/api/Courses/getAllVerified"
         );
         if (!response.ok) throw new Error("Something went wrong");
         const { courses } = await response.json();
 
         const urls = courses.map((course) => {
-          return `http://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
+          return `https://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
         });
         const requests = urls.map((url) =>
           fetch(url).then((response) => response.json())

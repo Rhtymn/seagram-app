@@ -66,7 +66,7 @@ const StudentDashboard = () => {
     const getEnrolledCourse = async () => {
       try {
         fetch(
-          `http://seagram-api.herokuapp.com/api/accounts/enrolledCourses?access_token=${user.token}`
+          `https://seagram-api.herokuapp.com/api/accounts/enrolledCourses?access_token=${user.token}`
         )
           .then((response) => {
             if (response.ok) return response.json();
@@ -77,7 +77,7 @@ const StudentDashboard = () => {
             console.log(enrolledCourses);
 
             const urls = enrolledCourses.map((course) => {
-              return `http://seagram-api.herokuapp.com/api/Courses/${course.courseId}`;
+              return `https://seagram-api.herokuapp.com/api/Courses/${course.courseId}`;
             });
             const requests = urls.map((url) =>
               fetch(url).then((response) => response.json())
@@ -94,7 +94,7 @@ const StudentDashboard = () => {
               .then(async (data) => {
                 const courseData = [...data];
                 const urls = data.map((course) => {
-                  return `http://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
+                  return `https://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
                 });
                 const requests = urls.map((url) =>
                   fetch(url).then((response) => response.json())
