@@ -58,7 +58,6 @@ const StudentCourse = () => {
         if (!response.ok) throw new Error("Something went wrong");
         const { courses } = await response.json();
 
-        console.log(courses);
         const urls = courses.map((course) => {
           return `http://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
         });

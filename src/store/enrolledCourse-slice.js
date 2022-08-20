@@ -5,7 +5,6 @@ const enrolledCourseSlice = createSlice({
   initialState: {
     data: [],
     lectures: [],
-    lectureDetails: [],
     currentPage: 1,
     selectedRowNumber: "5",
     selectedSortBy: "Name",
@@ -16,9 +15,9 @@ const enrolledCourseSlice = createSlice({
     setData(state, actions) {
       state.data = actions.payload;
     },
-    addedLectures(state, actions) {
+    setLectures(state, actions) {
       if (state.lectures.length === 0) {
-        const newLectures = [...actions.payload, ...state.lectures];
+        const newLectures = [...state.lectures, ...actions.payload];
         state.lectures = newLectures;
       } else {
         actions.payload.forEach((element) => {

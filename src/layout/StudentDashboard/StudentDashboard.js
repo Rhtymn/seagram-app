@@ -35,7 +35,7 @@ const EnrolledCourse = (props) => {
         title: `${props.title}`,
         description: `${props.description}`,
         back: `${location.pathname}`,
-        instructor: "Robert",
+        instructor: `${props.instructor}`,
       },
     });
   };
@@ -58,7 +58,7 @@ const StudentDashboard = () => {
   );
   const enrolledCourse = useSelector((state) => state.enrolledCourse.data);
   const user = useSelector((state) => state.user.information);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Nanti logicnya diubah ambil course yang udah di-enroll student
@@ -72,8 +72,10 @@ const StudentDashboard = () => {
             if (response.ok) return response.json();
             else return Promise.reject(response);
           })
-          .then((data) => {
+          .then(async (data) => {
             const { enrolledCourses } = data;
+            console.log(enrolledCourses);
+
             const urls = enrolledCourses.map((course) => {
               return `http://seagram-api.herokuapp.com/api/Courses/${course.courseId}`;
             });
@@ -117,6 +119,7 @@ const StudentDashboard = () => {
                 });
 
                 dispatch(enrolledCourseActions.setData([...fixedCourseData]));
+                setIsLoading(false);
               });
           });
       } catch (error) {}

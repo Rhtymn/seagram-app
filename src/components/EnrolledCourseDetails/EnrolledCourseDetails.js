@@ -5,32 +5,6 @@ import { useParams } from "react-router-dom";
 import { enrolledCourseActions } from "../../store/enrolledCourse-slice";
 
 const Lecture = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
-  const params = useParams();
-  const lectureDetails = useSelector(
-    (state) => state.enrolledCourse.lectureDetails
-  );
-  const [relatedDetails] = lectureDetails.filter(
-    (lecture) => lecture.lectureId === props.id
-  );
-
-  const getLectureDetails = useCallback(async () => {
-    try {
-      const response = await fetch(
-        `https://seagram-api.herokuapp.com/api/Courses/${params.courseId}/lectures/${props.id}/lectureDetails`
-      );
-      if (!response.ok) throw new Error("Something went wrong");
-      const detailsData = await response.json();
-      dispatch(enrolledCourseActions.addedLectureDetails(detailsData));
-      setIsLoading(false);
-    } catch (error) {}
-  });
-
-  useEffect(() => {
-    getLectureDetails();
-  }, [getLectureDetails]);
-
   const [isShowDetails, setIsShowDetails] = useState(false);
   const LectureDetailsClasses = isShowDetails
     ? `${styles.lecture_information}`
@@ -42,19 +16,9 @@ const Lecture = (props) => {
     });
   };
 
-  const learnClickHandler = async (e) => {
+  const navigateLinkHandler = (e) => {
     e.preventDefault();
-    const getMaterials = async () => {
-      try {
-        const response = await fetch(
-          `http://seagram-api.herokuapp.com/api/LectureDetails/${relatedDetails.id}/materials`
-        );
-        if (!response.ok) throw new Error("Something went wrong");
-        const materialsData = await response.json();
-        window.open(`${materialsData.url}`);
-      } catch (error) {}
-    };
-    getMaterials();
+    window.open(`${props.material.url}`);
   };
 
   return (
@@ -68,10 +32,12 @@ const Lecture = (props) => {
       <div className={LectureDetailsClasses}>
         <div className={`${styles.lecture__description}`}>
           <div className="mb-1">Description</div>
-          <div>{isLoading ? "Please wait..." : relatedDetails.description}</div>
+          <div>{props.lectureDetails.description}</div>
         </div>
         <div className={`${styles.lecture__link}`}>
-          <a onClick={learnClickHandler}>Learn</a>
+          <a href="#" onClick={navigateLinkHandler}>
+            Learn
+          </a>
         </div>
       </div>
     </li>
@@ -79,19 +45,79 @@ const Lecture = (props) => {
 };
 
 const EnrolledCourseDetails = (props) => {
-  const params = useParams();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const lectures = useSelector((state) => state.enrolledCourse.lectures);
-  const relatedLectures = lectures.filter(
-    (lecture) => lecture.courseId === params.courseId
-  );
+  const params = useParams();
   const Spinner = (
     <div class="spinner-grow text-secondary" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   );
-  const LectureList = relatedLectures.map((lecture) => (
-    <Lecture key={lecture.id} {...lecture} />
-  ));
+
+  useEffect(() => {
+    // GET LECTURE
+    const getLectures = async () => {
+      let response = await fetch(
+        `https://seagram-api.herokuapp.com/api/Courses/${params.courseId}/lectures`
+      );
+      const lectures = await response.json();
+      // console.log(lectures);
+
+      let urls = lectures.map(
+        (lecture) =>
+          `https://seagram-api.herokuapp.com/api/Courses/${params.courseId}/lectures/${lecture.id}/lectureDetails`
+      );
+      let request = urls.map((url) =>
+        fetch(url).then((response) => response.json())
+      );
+
+      const lectureDetails = await Promise.all(request).then((datas) => {
+        const result = [];
+        datas.forEach((data) => {
+          result.push(data);
+        });
+        return result;
+      });
+      // console.log(lectureDetails);
+
+      urls = lectureDetails.map(
+        (ld) =>
+          `https://seagram-api.herokuapp.com/api/LectureDetails/${ld.id}/material`
+      );
+      request = urls.map((url) =>
+        fetch(url).then((response) => response.json())
+      );
+
+      const materials = await Promise.all(request).then((datas) => {
+        const result = [];
+        datas.forEach((data) => {
+          result.push(data);
+        });
+        return result;
+      });
+      // console.log(materials);
+
+      const newLectures = lectures.map((lecture, idx) => {
+        return {
+          ...lecture,
+          lectureDetails: lectureDetails[idx],
+          material: materials[idx],
+        };
+      });
+      // console.log(newLectures);
+      dispatch(enrolledCourseActions.setLectures(newLectures));
+      setIsLoading(false);
+    };
+    const getQuiz = async () => {};
+    getLectures();
+  }, []);
+
+  let LectureList;
+  if (!isLoading) {
+    LectureList = lectures.map((lecture) => <Lecture {...lecture} />);
+  }
+
   return (
     <>
       <div className={`${styles.course_information}`}>
@@ -113,8 +139,8 @@ const EnrolledCourseDetails = (props) => {
         <div className={`${styles.lecture}`}>
           <h2>Lecture</h2>
           <ul>
-            {props.lectureIsLoad && Spinner}
-            {LectureList}
+            {isLoading && Spinner}
+            {!isLoading && LectureList}
           </ul>
         </div>
         <div className={`${styles.divider}`}></div>

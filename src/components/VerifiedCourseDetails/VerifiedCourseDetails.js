@@ -1,7 +1,35 @@
 import React from "react";
 import styles from "./VerifiedCourseDetails.module.css";
 import Button from "../../UI/Button/Button";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const VerifiedCourseDetails = (props) => {
+  const params = useParams();
+  const user = useSelector((state) => state.user.information);
+  const enrollHandler = async () => {
+    try {
+      const headers = new Headers();
+      headers.append("content-type", "application/json");
+      const reqOptions = {
+        method: "POST",
+        headers: headers,
+        redirect: "follow",
+        body: JSON.stringify({
+          courseId: `${params.courseId}`,
+        }),
+      };
+      const response = await fetch(
+        `https://seagram-api.herokuapp.com/api/accounts/enrolledCourses?access_token=${user.token}`,
+        reqOptions
+      );
+      if (!response.ok) throw new Error("Something went wrong");
+      console.log("Enrolled");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const Content = (
     <div className={`${styles.course_information}`}>
       <div className="d-flex justify-content-between align-items-center">
@@ -23,7 +51,7 @@ const VerifiedCourseDetails = (props) => {
           </p>
         </div>
       </div>
-      {props.state.back && <Button>Enroll</Button>}
+      {props.state.back && <Button clickHandler={enrollHandler}>Enroll</Button>}
     </div>
   );
 
