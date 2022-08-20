@@ -43,12 +43,6 @@ const VerifiedCourseDetails = (props) => {
         </div>
         <div className={`${styles.description_text}`}>
           <p>{props.state.description}</p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh
-            nisl condimentum id venenatis a condimentum vitae sapien
-            pellentesque. Vitae ultricies leo integer malesuada.
-          </p>
         </div>
       </div>
       {props.state.back && <Button clickHandler={enrollHandler}>Enroll</Button>}

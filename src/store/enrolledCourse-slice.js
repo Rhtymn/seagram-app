@@ -5,6 +5,7 @@ const enrolledCourseSlice = createSlice({
   initialState: {
     data: [],
     lectures: [],
+    quiz: [],
     currentPage: 1,
     selectedRowNumber: "5",
     selectedSortBy: "Name",
