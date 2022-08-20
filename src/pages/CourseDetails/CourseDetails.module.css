@@ -1,0 +1,32 @@
+.course_details_container {
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  z-index: 110;
+}
+
+.course_details_actions {
+  cursor: pointer;
+  position: absolute;
+  right: 25px;
+  top: 15px;
+  font-size: 1.5rem;
+}
+
+.hide {
+  display: none;
+}
+
+.spinner_container {
+  position: relative;
+  /* border: 1px solid black; */
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  column-gap: 1rem;
+  z-index: 300;
+}

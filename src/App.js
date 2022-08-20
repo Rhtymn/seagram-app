@@ -9,6 +9,7 @@ import QuizPage from "./pages/QuizPage/QuizPage";
 import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import InstructorDashboard from "./layout/InstructorDashboard/InstructorDashboard";
 import VerifiedPage from "./pages/VerifiedPage/VerifiedPage";
+import CourseDetails from "./pages/CourseDetails/CourseDetails";
 
 // TODO
 // 1. Add course program details (CRUD)
@@ -28,6 +29,11 @@ function App() {
           <Route path="dashboard" element={<InstructorDashboard />}></Route>
         </Route>
         <Route path="verified" element={<VerifiedPage />} />
+        <Route path="student/course/:courseId" element={<CourseDetails />} />
+        <Route
+          path="student/dashboard/enrolledcourse/:courseId"
+          element={<CourseDetails />}
+        />
         <Route path="*" element={<LoginPage />} />
       </Routes>
     </Router>

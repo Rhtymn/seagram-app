@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./StudentDashboard.module.css";
 import ContentContainer from "../../UI/ContentContainer/ContentContainer";
 import CourseListContainer from "../../UI/CourseListContainer/CourseListContainer";
@@ -13,6 +13,7 @@ import useSort from "../../hooks/useSort";
 import SelectContainer from "../../UI/SelectContainer/SelectContainer";
 import Options from "../../UI/Options/Options";
 import OptionItem from "../../UI/Options/OptionItem";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ProgressBar = (props) => {
   return (
@@ -24,17 +25,19 @@ const ProgressBar = (props) => {
 };
 
 const EnrolledCourse = (props) => {
-  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const courseClickHandler = () => {
-    const courseDetails = {
-      id: props.id,
-      type: props.type,
-      courseName: props.courseName,
-      instructor: props.instructor,
-      progress: props.progress,
-    };
-    dispatch(uiStudentActions.setActiveCourseDetails(courseDetails));
-    dispatch(uiStudentActions.toggleCourseDetails());
+    navigate(`/student/dashboard/enrolledcourse/${props.id}`, {
+      state: {
+        type: "enrolled",
+        id: `${props.id}`,
+        title: `${props.title}`,
+        description: `${props.description}`,
+        back: `${location.pathname}`,
+        instructor: `${props.instructor}`,
+      },
+    });
   };
 
   return (
@@ -53,7 +56,78 @@ const StudentDashboard = () => {
   const isShowCourseDetails = useSelector(
     (state) => state.uiStudent.isShowCourseDetails
   );
-  const enrolledCourse = useSelector((state) => state.course.enrolledCourse);
+  const enrolledCourse = useSelector((state) => state.enrolledCourse.data);
+  const user = useSelector((state) => state.user.information);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Nanti logicnya diubah ambil course yang udah di-enroll student
+    // Sekarang ambil verified course aja
+    const getEnrolledCourse = async () => {
+      try {
+        fetch(
+          `http://seagram-api.herokuapp.com/api/accounts/enrolledCourses?access_token=${user.token}`
+        )
+          .then((response) => {
+            if (response.ok) return response.json();
+            else return Promise.reject(response);
+          })
+          .then(async (data) => {
+            const { enrolledCourses } = data;
+            console.log(enrolledCourses);
+
+            const urls = enrolledCourses.map((course) => {
+              return `http://seagram-api.herokuapp.com/api/Courses/${course.courseId}`;
+            });
+            const requests = urls.map((url) =>
+              fetch(url).then((response) => response.json())
+            );
+
+            Promise.all(requests)
+              .then((datas) => {
+                const result = [];
+                datas.forEach((data) => {
+                  result.push(data);
+                });
+                return result;
+              })
+              .then(async (data) => {
+                const courseData = [...data];
+                const urls = data.map((course) => {
+                  return `http://seagram-api.herokuapp.com/api/Courses/${course.id}/baseUser`;
+                });
+                const requests = urls.map((url) =>
+                  fetch(url).then((response) => response.json())
+                );
+
+                const instructors = await Promise.all(requests).then(
+                  (datas) => {
+                    const result = [];
+                    datas.forEach((data) => {
+                      result.push(data);
+                    });
+                    return result;
+                  }
+                );
+
+                const fixedCourseData = courseData.map((course, idx) => {
+                  const newCourseData = {
+                    ...course,
+                    instructor: instructors[idx].name,
+                  };
+                  return newCourseData;
+                });
+
+                dispatch(enrolledCourseActions.setData([...fixedCourseData]));
+                setIsLoading(false);
+              });
+          });
+      } catch (error) {}
+    };
+    getEnrolledCourse();
+  }, []);
+
+  // SORTING
   const {
     selectedSortBy,
     isShowSortOption,
@@ -111,6 +185,7 @@ const StudentDashboard = () => {
     pageInformation,
     currentPage,
     maximumPage,
+    isLoading,
   };
 
   const Content = (
